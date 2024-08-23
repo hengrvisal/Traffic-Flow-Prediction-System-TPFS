@@ -11,12 +11,12 @@ TRAFFIC_COUNT_LOCATIONS_WITH_LONG_LAT_CSV_PATH = 'datasets/Traffic_Count_Locatio
 def PrintXLSB():
     with pd.ExcelFile(SCATS_DATA_OCTOBER_2006_XLS_PATH, engine='pyxlsb') as xls:
         workbook = xls.sheet_names
-        print(workbook)
+        # print(workbook)
 
         df = pd.read_excel(xls, sheet_name=workbook[0])
 
     # returning the dataframe
-    return df.head(1000).to_string()
+    return df.head()
 
 
 # printing csv file
