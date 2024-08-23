@@ -2,7 +2,7 @@
 
 #### Group members:
 - Ratanakvisal Heng
-- Pong Pisith Keo
+- Pongpisith Keo
 - Eshita
 
 This is out take on the Assignment, we'll update this as we progresses.
