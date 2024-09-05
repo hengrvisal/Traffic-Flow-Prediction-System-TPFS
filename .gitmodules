@@ -1,0 +1,3 @@
+[submodule "TrafficFlowPredictionSystem-TrainingModel"]
+	path = TrafficFlowPredictionSystem-TrainingModel
+	url = https://github.com/hengrvisal/TrafficFlowPredictionSystem-TrainingModel.git
