@@ -1,8 +1,0 @@
-- Data Exploration: Dive deep into the datasets (Scats Data, Traffic Count Locations, SCATS Site Listing) to understand the features and identify any data cleaning needed.
-- Data Preprocessing: Implement necessary preprocessing steps like handling missing values, data normalization, and feature engineering (as discussed earlier).
-- Define Input Format: Specify the predefined format for the traffic flow dataset that your system will use.
-- Model Adaptation: Begin adapting the open-source TrafficFlowPrediction project to work with the Boroondara dataset.
-- Model Selection: Choose a basic machine learning model (e.g., Linear Regression, Decision Trees) for initial traffic flow prediction.
-- Model Training: Train the selected model on the Boroondara dataset.
-- Model Evaluation: Evaluate the performance of the model using appropriate metrics (e.g., RMSE, MAE).
-- Weekly Progress Check: Review our progress with Tuan and make any necessary adjustments plan.
