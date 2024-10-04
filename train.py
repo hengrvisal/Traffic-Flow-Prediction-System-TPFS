@@ -14,14 +14,18 @@ from keras.callbacks import EarlyStopping
 warnings.filterwarnings("ignore")
 
 
-def get_locations():
-    with open(os.path.join(os.path.dirname(__file__), 'SCATS_Sites.txt')) as SCATS_Sites:
-        sites = SCATS_Sites.readlines()
-        sites = ''.join(sites).split(',\n')
-        sites = filter(lambda loc: loc != '', sites)
-        return list(sites)
+def get_scats_sites(data_dir):
+    """Get SCATS sites based on file names from the directory"""
+    # Get all the train file names from the folder
+    files = os.listdir(data_dir)
+    train_files = [f for f in files if 'train' in f]
 
-def train_model(model, X_train, y_train, name, config):
+    # Extract SCATS IDs (e.g., '2000', '2200', etc.)
+    scats_sites = [f.split('_')[0] for f in train_files]
+
+    return scats_sites
+
+def train_model(model, X_train, y_train, name, config, site):
     """train
     train a single model.
 
@@ -41,9 +45,9 @@ def train_model(model, X_train, y_train, name, config):
         epochs=config["epochs"],
         validation_split=0.05)
 
-    model.save(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}.h5'))
+    model.save(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}_{site}.h5'))
     df = pd.DataFrame.from_dict(hist.history)
-    df.to_csv(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name} loss.csv'), encoding='utf-8', index=False)
+    df.to_csv(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}_{site}_loss.csv'), encoding='utf-8', index=False)
 
 
 def train_seas(models, X_train, y_train, name, config):
@@ -89,31 +93,42 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",
-        default="lstm",
+        default="saes",
         help="Model to train.")
     args = parser.parse_args()
 
     lag = 12
     config = {"batch": 128, "epochs": 10}
 
-    scats_sites = get_locations()
+    # Get all SCATS sites (by extracting unique IDs from file names)
+    data_dir = 'data/splitted_data'
+    scats_sites = get_scats_sites(data_dir)
 
-    file1 = 'data/splitted_data/970_train.csv'
-    file2 = 'data/splitted_data/970_test.csv'
-    X_train, y_train, _, _, _ = process_data(file1, file2, lag)
+    # Loop through each SCATS site and train the model
+    for site in scats_sites:
+        train_file = os.path.join(data_dir, f'{site}_train.csv')
+        test_file = os.path.join(data_dir, f'{site}_test.csv')
 
-    if args.model == 'lstm':
-        X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
-        m = model.get_lstm([lag, 64, 64, 1])
-        train_model(m, X_train, y_train, args.model, config)
-    if args.model == 'gru':
-        X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
-        m = model.get_gru([lag, 64, 64, 1])
-        train_model(m, X_train, y_train, args.model, config)
-    if args.model == 'saes':
-        X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1]))
-        m = model.get_saes([lag, 400, 400, 400, 1])
-        train_seas(m, X_train, y_train, args.model, config)
+        # Process data for each SCATS site
+        X_train, y_train, _, _, _ = process_data(train_file, test_file, lag)
+
+        # Reshape input data based on the model type
+        if args.model == 'lstm':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            m = model.get_lstm([lag, 64, 64, 1])
+            train_model(m, X_train, y_train, args.model, config, site)
+
+        elif args.model == 'gru':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            m = model.get_gru([lag, 64, 64, 1])
+            train_model(m, X_train, y_train, args.model, config, site)
+
+        elif args.model == 'saes':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1]))
+            m = model.get_saes([lag, 400, 400, 400, 1])
+            train_model(m, X_train, y_train, args.model, config, site)
+
+        print(f"Finished training model for SCATS site: {site}")
 
 
 if __name__ == '__main__':

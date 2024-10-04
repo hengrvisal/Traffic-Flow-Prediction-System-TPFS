@@ -94,15 +94,15 @@ def plot_results(y_true, y_preds, names):
 
 
 def main():
-    lstm = load_model('model/sites_models/lstm.h5')
-    gru = load_model('model/sites_models/gru.h5')
-    saes = load_model('model/sites_models/saes.h5')
-    models = [lstm, gru, saes]
-    names = ['LSTM', 'GRU', 'SAEs']
+    lstm = load_model('model/sites_models/lstm_2000.h5')
+    gru = load_model('model/sites_models/gru_2000.h5')
+    # saes = load_model('model/sites_models/saes.h5')
+    models = [lstm, gru]
+    names = ['LSTM', 'GRU']
 
     lag = 12
-    file1 = 'data/splitted_data/970_train.csv'
-    file2 = 'data/splitted_data/970_test.csv'
+    file1 = 'data/splitted_data/2000_train.csv'
+    file2 = 'data/splitted_data/2000_test.csv'
     _, _, X_test, y_test, scaler = process_data(file1, file2, lag)
     y_test = scaler.inverse_transform(y_test.reshape(-1, 1)).reshape(1, -1)[0]
 
