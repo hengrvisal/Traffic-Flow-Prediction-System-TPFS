@@ -50,7 +50,7 @@ def train_model(model, X_train, y_train, name, config, site):
     df.to_csv(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}_{site}_loss.csv'), encoding='utf-8', index=False)
 
 
-def train_seas(models, X_train, y_train, name, config):
+def train_seas(models, X_train, y_train, name, config, site):
     """train
     train the SAEs model.
 
@@ -86,7 +86,7 @@ def train_seas(models, X_train, y_train, name, config):
         weights = models[i].get_layer('hidden').get_weights()
         saes.get_layer('hidden%d' % (i + 1)).set_weights(weights)
 
-    train_model(saes, X_train, y_train, name, config)
+    train_model(saes, X_train, y_train, name, config, site)
 
 
 def main(argv):
@@ -126,7 +126,7 @@ def main(argv):
         elif args.model == 'saes':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1]))
             m = model.get_saes([lag, 400, 400, 400, 1])
-            train_model(m, X_train, y_train, args.model, config, site)
+            train_seas(m, X_train, y_train, args.model, config, site)
 
         print(f"Finished training model for SCATS site: {site}")
 

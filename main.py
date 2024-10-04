@@ -96,9 +96,9 @@ def plot_results(y_true, y_preds, names):
 def main():
     lstm = load_model('model/sites_models/lstm_2000.h5')
     gru = load_model('model/sites_models/gru_2000.h5')
-    # saes = load_model('model/sites_models/saes.h5')
-    models = [lstm, gru]
-    names = ['LSTM', 'GRU']
+    saes = load_model('model/sites_models/saes_2000.h5')
+    models = [lstm, gru, saes]
+    names = ['LSTM', 'GRU', 'SAEs']
 
     lag = 12
     file1 = 'data/splitted_data/2000_train.csv'
