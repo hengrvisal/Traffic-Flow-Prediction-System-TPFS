@@ -65,8 +65,8 @@ def prepare_input_data(date_time, input_shape, model_type):
         features.extend([0.5] * 13)  # Using 0.5 as a neutral placeholder value
         return np.array(features).reshape(1, 18)
 
-def denormalize_prediction(prediction, max_value=500):
-    return int(round(prediction * max_value))
+def denormalize_prediction(prediction, min_value=0, max_value=500):
+    return int(round(min_value + prediction * (max_value - min_value)))
 
 def interpret_traffic_flow(value):
     if value < 50:
@@ -78,7 +78,7 @@ def interpret_traffic_flow(value):
     else:
         return "Very high traffic"
 
-def predict_traffic_flow(path, date_time, model_type):
+def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
     predictions = []
     for site in path:
         model = load_model_for_site(site, model_type)
@@ -88,10 +88,15 @@ def predict_traffic_flow(path, date_time, model_type):
             else:  # SAES
                 input_shape = model.input_shape[1]
             input_data = prepare_input_data(date_time, input_shape, model_type)
-            prediction = model.predict(input_data)
-            denormalized_prediction = denormalize_prediction(prediction[0][0])
-            predictions.append((site, denormalized_prediction, input_shape))
+            try:
+                prediction = model.predict(input_data)
+                denormalized_prediction = denormalize_prediction(prediction[0][0], 500, 0)
+                predictions.append((site, denormalized_prediction, input_shape))
+            except Exception as e:
+                print(f"Error predicting for site {site}: {str(e)}")
+                predictions.append((site, None, input_shape))
         else:
+            print(f"No {model_type} model available for site {site}")
             predictions.append((site, None, None))
     return predictions
 
