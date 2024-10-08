@@ -128,7 +128,7 @@ def main():
                 interpretation = interpret_traffic_flow(pred)
                 print(f"SCATS site {site}: {pred} vehicles/5min - {interpretation} (Input shape: {input_shape})")
             else:
-                print(f"SCATS site {si  te}: No {model_type} model available")
+                print(f"SCATS site {site}: No {model_type} model available")
     else:
         print("No path found between the given SCATS sites.")
 
