@@ -1,127 +1,135 @@
+"""
+Train the NN model.
+"""
+import sys
+import warnings
+import argparse
 import numpy as np
 import pandas as pd
-from keras.models import load_model
 from data.data import process_data
+from model import model
+from keras.models import Model
 import os
-from datetime import datetime, timedelta
+from keras.callbacks import EarlyStopping
+warnings.filterwarnings("ignore")
 
 
-def prepare_input_sequence(data, date_time, lag=12):
+def get_scats_sites(data_dir):
+    """Get SCATS sites based on file names from the directory"""
+    # Get all the train file names from the folder
+    files = os.listdir(data_dir)
+    train_files = [f for f in files if 'train' in f]
+
+    # Extract SCATS IDs (e.g., '2000', '2200', etc.)
+    scats_sites = [f.split('_')[0] for f in train_files]
+
+    return scats_sites
+
+def train_model(model, X_train, y_train, name, config, site):
+    """train
+    train a single model.
+
+    # Arguments
+        model: Model, NN model to train.
+        X_train: ndarray(number, lags), Input data for train.
+        y_train: ndarray(number, ), result data for train.
+        name: String, name of model.
+        config: Dict, parameter for train.
     """
-    Prepare input sequence for prediction
 
-    Args:
-        data (DataFrame): Historical data with 'DateTime' and 'Volume' columns
-        date_time (datetime): Target datetime for prediction
-        lag (int): Number of previous time steps to use
+    model.compile(loss="mse", optimizer="rmsprop", metrics=['mape'])
+    # early = EarlyStopping(monitor='val_loss', patience=30, verbose=0, mode='auto')
+    hist = model.fit(
+        X_train, y_train,
+        batch_size=config["batch"],
+        epochs=config["epochs"],
+        validation_split=0.05)
 
-    Returns:
-        numpy array of shape (1, lag) or (1, lag, 1) for LSTM/GRU
+    model.save(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}_{site}.h5'))
+    df = pd.DataFrame.from_dict(hist.history)
+    df.to_csv(os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{name}_{site}_loss.csv'), encoding='utf-8', index=False)
+
+
+def train_seas(models, X_train, y_train, name, config, site):
+    """train
+    train the SAEs model.
+
+    # Arguments
+        models: List, list of SAE model.
+        X_train: ndarray(number, lags), Input data for train.
+        y_train: ndarray(number, ), result data for train.
+        name: String, name of model.
+        config: Dict, parameter for train.
     """
-    # Get the lag number of previous values
-    end_idx = data[data['DateTime'] == date_time].index[0] if date_time in data['DateTime'].values else len(data)
-    start_idx = max(0, end_idx - lag)
 
-    sequence = data['Volume'].iloc[start_idx:end_idx].values
+    temp = X_train
+    # early = EarlyStopping(monitor='val_loss', patience=30, verbose=0, mode='auto')
 
-    # Pad with zeros if we don't have enough historical data
-    if len(sequence) < lag:
-        sequence = np.pad(sequence, (lag - len(sequence), 0), 'constant')
+    for i in range(len(models) - 1):
+        if i > 0:
+            p = models[i - 1]
+            hidden_layer_model = Model(input=p.input,
+                                       output=p.get_layer('hidden').output)
+            temp = hidden_layer_model.predict(temp)
 
-    return sequence[-lag:]  # Take the last 'lag' values
+        m = models[i]
+        m.compile(loss="mse", optimizer="rmsprop", metrics=['mape'])
 
+        m.fit(temp, y_train, batch_size=config["batch"],
+              epochs=config["epochs"],
+              validation_split=0.05)
 
-def predict_traffic_by_time(site_id, model_type, start_time, end_time, historical_data_file, lag=12):
-    """
-    Make predictions for a specific time period
+        models[i] = m
 
-    Args:
-        site_id (str): The SCATS site ID (e.g., '2000')
-        model_type (str): Type of model ('lstm', 'gru', or 'saes')
-        start_time (datetime): Start time for predictions
-        end_time (datetime): End time for predictions
-        historical_data_file (str): Path to historical data file
-        lag (int): Number of time steps to use for prediction
+    saes = models[-1]
+    for i in range(len(models) - 1):
+        weights = models[i].get_layer('hidden').get_weights()
+        saes.get_layer('hidden%d' % (i + 1)).set_weights(weights)
 
-    Returns:
-        DataFrame with timestamps and predictions
-    """
-    # Load the trained model
-    model_path = os.path.join('model', 'sites_models', f'{model_type}_{site_id}.h5')
-    if not os.path.exists(model_path):
-        raise FileNotFoundError(f"No trained model found for site {site_id}")
-
-    model = load_model(model_path)
-
-    # Load historical data
-    historical_data = pd.read_csv(historical_data_file)
-
-    # Convert DateTime column to datetime type
-    historical_data['DateTime'] = pd.to_datetime(historical_data['DateTime'])
-
-    # Sort data by datetime
-    historical_data = historical_data.sort_values('DateTime')
-
-    # Generate prediction timestamps
-    timestamps = []
-    current_time = start_time
-    while current_time <= end_time:
-        timestamps.append(current_time)
-        current_time += timedelta(minutes=15)  # Assuming 15-minute intervals
-
-    predictions = []
-
-    for t in timestamps:
-        # Prepare input sequence
-        sequence = prepare_input_sequence(historical_data, t, lag)
-
-        # Reshape input based on model type
-        if model_type in ['lstm', 'gru']:
-            sequence = np.reshape(sequence, (1, lag, 1))
-        else:  # saes
-            sequence = np.reshape(sequence, (1, lag))
-
-        # Make prediction
-        pred = model.predict(sequence, verbose=0)
-        predictions.append(pred[0][0])
-
-    # Create results DataFrame
-    results = pd.DataFrame({
-        'DateTime': timestamps,
-        'Predicted_Volume': predictions
-    })
-
-    # Add additional time-based columns
-    results['Date'] = results['DateTime'].dt.date
-    results['Time'] = results['DateTime'].dt.time
-    results['Day_of_Week'] = results['DateTime'].dt.day_name()
-    results['Hour'] = results['DateTime'].dt.hour
-    results['Minute'] = results['DateTime'].dt.minute
-
-    return results
+    train_model(saes, X_train, y_train, name, config, site)
 
 
-# Example usage
-if __name__ == "__main__":
-    site_id = '2000'
-    model_type = 'lstm'
+def main(argv):
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--model",
+        default="saes",
+        help="Model to train.")
+    args = parser.parse_args()
 
-    # Example: Predict for next hour
-    start_time = datetime(2024, 10, 4, 8, 0)  # October 4, 2024, 8:00 AM
-    end_time = datetime(2024, 10, 4, 9, 0)  # October 4, 2024, 9:00 AM
+    lag = 12
+    config = {"batch": 128, "epochs": 10}
 
-    try:
-        predictions = predict_traffic_by_time(
-            site_id=site_id,
-            model_type=model_type,
-            start_time=start_time,
-            end_time=end_time,
-            historical_data_file='data/splitted_data/2000_test.csv'  # Use your test data file
-        )
+    # Get all SCATS sites (by extracting unique IDs from file names)
+    data_dir = 'data/splitted_data'
+    scats_sites = get_scats_sites(data_dir)
 
-        # Display predictions
-        print("\nPredictions:")
-        print(predictions[['DateTime', 'Predicted_Volume', 'Time']])
+    # Loop through each SCATS site and train the model
+    for site in scats_sites:
+        train_file = os.path.join(data_dir, f'{site}_train.csv')
+        test_file = os.path.join(data_dir, f'{site}_test.csv')
 
-    except Exception as e:
-        print(f"Error making predictions: {str(e)}")
+        # Process data for each SCATS site
+        X_train, y_train, _, _, _ = process_data(train_file, test_file, lag)
+
+        # Reshape input data based on the model type
+        if args.model == 'lstm':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            m = model.get_lstm([lag, 64, 64, 1])
+            train_model(m, X_train, y_train, args.model, config, site)
+
+        elif args.model == 'gru':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            m = model.get_gru([lag, 64, 64, 1])
+            train_model(m, X_train, y_train, args.model, config, site)
+
+        elif args.model == 'saes':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1]))
+            m = model.get_saes([lag, 400, 400, 400, 1])
+            train_seas(m, X_train, y_train, args.model, config, site)
+
+        print(f"Finished training model for SCATS site: {site}")
+
+
+if __name__ == '__main__':
+    main(sys.argv)
