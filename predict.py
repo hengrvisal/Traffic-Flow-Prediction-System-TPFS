@@ -52,8 +52,8 @@ def prepare_input_data(date_time, input_shape, model_type):
             data.append(features[:input_shape[1]])
         return np.array(data).reshape((1,) + input_shape)
     elif model_type == 'SAES':
-        # For SAES, we'll create a 12-feature input
-        # First 5 features are time-based, last 7 are placeholders for recent traffic data
+        # For SAES, we'll create an 18-feature input
+        # First 5 features are time-based, last 13 are placeholders for recent traffic data
         features = [
             date_time.hour / 24.0,
             date_time.minute / 60.0,
@@ -61,9 +61,9 @@ def prepare_input_data(date_time, input_shape, model_type):
             date_time.day / 31.0,
             date_time.month / 12.0
         ]
-        # Add 7 placeholder values for recent traffic data
-        features.extend([0.5] * 7)  # Using 0.5 as a neutral placeholder value
-        return np.array(features).reshape(1, 12)
+        # Add 13 placeholder values for recent traffic data
+        features.extend([0.5] * 13)  # Using 0.5 as a neutral placeholder value
+        return np.array(features).reshape(1, 18)
 
 def denormalize_prediction(prediction, max_value=500):
     return int(round(prediction * max_value))
@@ -95,7 +95,7 @@ def predict_traffic_flow(path, date_time, model_type):
             predictions.append((site, None, None))
     return predictions
 
-def main():
+def predict():
     neighbors = load_neighbors()
 
     start = input("Enter starting SCATS site number: ")
@@ -133,4 +133,4 @@ def main():
         print("No path found between the given SCATS sites.")
 
 if __name__ == "__main__":
-    main()
+    predict()
