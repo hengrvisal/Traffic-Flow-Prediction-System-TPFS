@@ -3,8 +3,6 @@ import pandas as pd
 from keras.models import load_model
 from datetime import datetime, timedelta
 
-
-# Load neighboring intersections data
 def load_neighbors():
     df = pd.read_csv('neighbouring_intersections.csv')
     neighbors = {}
@@ -13,8 +11,6 @@ def load_neighbors():
         neighbors[scats] = row['Neighbours'].split(';')
     return neighbors
 
-
-# Find path between two SCATS sites
 def find_path(start, end, neighbors):
     queue = [(start, [start])]
     visited = set()
@@ -30,8 +26,6 @@ def find_path(start, end, neighbors):
                     queue.append((neighbor, path + [neighbor]))
     return None
 
-
-# Load appropriate model for a SCATS site
 def load_model_for_site(site, model_type):
     model_path = f'model/sites_models/{model_type.lower()}_{site}.h5'
 
@@ -43,31 +37,36 @@ def load_model_for_site(site, model_type):
         print(f"No {model_type} model found for site {site}")
         return None
 
-
-# Prepare input data for the model
-def prepare_input_data(date_time, input_shape):
-    data = []
-    for i in range(input_shape[0]):  # Use the first dimension of input_shape
-        dt = date_time + timedelta(hours=i)
+def prepare_input_data(date_time, input_shape, model_type):
+    if model_type in ['LSTM', 'GRU']:
+        data = []
+        for i in range(input_shape[0]):
+            dt = date_time + timedelta(minutes=5*i)
+            features = [
+                dt.hour / 24.0,
+                dt.minute / 60.0,
+                dt.weekday() / 6.0,
+                dt.day / 31.0,
+                dt.month / 12.0
+            ]
+            data.append(features[:input_shape[1]])
+        return np.array(data).reshape((1,) + input_shape)
+    elif model_type == 'SAES':
+        # For SAES, we'll create a 12-feature input
+        # First 5 features are time-based, last 7 are placeholders for recent traffic data
         features = [
-            dt.hour / 24.0,  # Normalize hour to [0, 1]
-            dt.minute / 60.0,  # Normalize minute to [0, 1]
-            dt.weekday() / 6.0,  # Normalize weekday to [0, 1]
-            dt.day / 31.0,  # Normalize day to [0, 1]
-            dt.month / 12.0  # Normalize month to [0, 1]
+            date_time.hour / 24.0,
+            date_time.minute / 60.0,
+            date_time.weekday() / 6.0,
+            date_time.day / 31.0,
+            date_time.month / 12.0
         ]
-        data.append(features[:input_shape[1]])  # Use only as many features as the input shape allows
-    return np.array(data).reshape((1,) + input_shape)
+        # Add 7 placeholder values for recent traffic data
+        features.extend([0.5] * 7)  # Using 0.5 as a neutral placeholder value
+        return np.array(features).reshape(1, 12)
 
-
-# Predict traffic flow along the path
 def denormalize_prediction(prediction, max_value=500):
-    """
-    Convert the normalized prediction back to the original scale.
-    Adjust max_value if a different scaling was used during training.
-    """
     return int(round(prediction * max_value))
-
 
 def interpret_traffic_flow(value):
     if value < 50:
@@ -79,15 +78,16 @@ def interpret_traffic_flow(value):
     else:
         return "Very high traffic"
 
-
-# Predict traffic flow along the path
 def predict_traffic_flow(path, date_time, model_type):
     predictions = []
     for site in path:
         model = load_model_for_site(site, model_type)
         if model:
-            input_shape = model.input_shape[1:]  # Get input shape excluding batch size
-            input_data = prepare_input_data(date_time, input_shape)
+            if model_type in ['LSTM', 'GRU']:
+                input_shape = model.input_shape[1:]
+            else:  # SAES
+                input_shape = model.input_shape[1]
+            input_data = prepare_input_data(date_time, input_shape, model_type)
             prediction = model.predict(input_data)
             denormalized_prediction = denormalize_prediction(prediction[0][0])
             predictions.append((site, denormalized_prediction, input_shape))
@@ -95,18 +95,16 @@ def predict_traffic_flow(path, date_time, model_type):
             predictions.append((site, None, None))
     return predictions
 
-
-# Main function
 def main():
     neighbors = load_neighbors()
 
     start = input("Enter starting SCATS site number: ")
     end = input("Enter ending SCATS site number: ")
 
-    model_type = input("Enter model type (LSTM or GRU): ").upper()
-    while model_type not in ['LSTM', 'GRU']:
-        print("Invalid model type. Please enter either LSTM or GRU.")
-        model_type = input("Enter model type (LSTM or GRU): ").upper()
+    model_type = input("Enter model type (LSTM, GRU, or SAES): ").upper()
+    while model_type not in ['LSTM', 'GRU', 'SAES']:
+        print("Invalid model type. Please enter LSTM, GRU, or SAES.")
+        model_type = input("Enter model type (LSTM, GRU, or SAES): ").upper()
 
     date_time_str = input("Enter date and time (YYYY-MM-DD HH:MM), or press Enter for current date and time: ")
     if date_time_str.strip() == "":
@@ -133,7 +131,6 @@ def main():
                 print(f"SCATS site {site}: No {model_type} model available")
     else:
         print("No path found between the given SCATS sites.")
-
 
 if __name__ == "__main__":
     main()
