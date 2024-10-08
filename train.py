@@ -46,7 +46,7 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",
-        default="saes",
+        default="gru",
         help="Model to train.")
     args = parser.parse_args()
 
@@ -61,26 +61,23 @@ def main(argv):
     for site in scats_sites:
         train_file = os.path.join(data_dir, f'{site}_train.csv')
         test_file = os.path.join(data_dir, f'{site}_test.csv')
-        
+
         # Process data for each SCATS site
-        X_train, y_train, _, _, _ = process_data(train_file, test_file, lag)
-        
+        X_train, X_train_time, y_train, X_test, X_test_time, y_test, scaler = process_data(train_file, test_file, lag)
+
         # Reshape input data based on the model type
         if args.model == 'lstm':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_lstm([lag, 64, 64, 1])
-            train_model(m, X_train, y_train, args.model, config, site)
-
         elif args.model == 'gru':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_gru([lag, 64, 64, 1])
-            train_model(m, X_train, y_train, args.model, config, site)
-
         elif args.model == 'saes':
-            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1]))
-            models = model.get_saes([lag, 400, 400, 400, 1])
-            m = models[-1]
-            train_model(m, X_train, y_train, args.model, config, site)
+            # For SAES, combine flow data with time features
+            X_train = np.concatenate((X_train, X_train_time), axis=1)
+            m = model.get_saes([X_train.shape[1], 400, 400, 400, 1])
+
+        train_model(m, X_train, y_train, args.model, config, site)
 
         print(f"Finished training model for SCATS site: {site}")
 
