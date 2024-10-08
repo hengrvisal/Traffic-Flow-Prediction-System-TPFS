@@ -1,9 +1,5 @@
 import pandas as pd
-import folium
 from geopy.distance import geodesic
-from sklearn.model_selection import train_test_split
-import math
-import shutil
 from predict import load_neighbors, find_path
 
 
