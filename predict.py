@@ -3,6 +3,7 @@ import pandas as pd
 from keras.models import load_model
 from datetime import datetime, timedelta
 
+
 def load_neighbors():
     df = pd.read_csv('neighbouring_intersections.csv')
     neighbors = {}
@@ -10,6 +11,7 @@ def load_neighbors():
         scats = str(row['Scats_number'])
         neighbors[scats] = row['Neighbours'].split(';')
     return neighbors
+
 
 def find_path(start, end, neighbors):
     queue = [(start, [start])]
@@ -26,6 +28,7 @@ def find_path(start, end, neighbors):
                     queue.append((neighbor, path + [neighbor]))
     return None
 
+
 def load_model_for_site(site, model_type):
     model_path = f'model/sites_models/{model_type.lower()}_{site}.h5'
 
@@ -36,6 +39,7 @@ def load_model_for_site(site, model_type):
     except:
         print(f"No {model_type} model found for site {site}")
         return None
+
 
 def prepare_input_data(date_time, input_shape, model_type):
     if model_type in ['LSTM', 'GRU']:
@@ -65,8 +69,10 @@ def prepare_input_data(date_time, input_shape, model_type):
         features.extend([0.5] * 13)  # Using 0.5 as a neutral placeholder value
         return np.array(features).reshape(1, 18)
 
+
 def denormalize_prediction(prediction, min_value=0, max_value=500):
     return int(round(min_value + prediction * (max_value - min_value)))
+
 
 def interpret_traffic_flow(value):
     if value < 50:
@@ -78,6 +84,7 @@ def interpret_traffic_flow(value):
     else:
         return "Very high traffic"
 
+
 def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
     predictions = []
     for site in path:
@@ -87,6 +94,7 @@ def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
                 input_shape = model.input_shape[1:]
             else:  # SAES
                 input_shape = model.input_shape[1]
+
             input_data = prepare_input_data(date_time, input_shape, model_type)
             try:
                 prediction = model.predict(input_data)
@@ -100,7 +108,8 @@ def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
             predictions.append((site, None, None))
     return predictions
 
-def predict():
+
+def traffic_flow_prediction():
     neighbors = load_neighbors()
 
     start = input("Enter starting SCATS site number: ")
@@ -137,5 +146,6 @@ def predict():
     else:
         print("No path found between the given SCATS sites.")
 
+
 if __name__ == "__main__":
-    predict()
+    traffic_flow_prediction()
