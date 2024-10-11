@@ -80,42 +80,58 @@ def cached_predict_traffic_flow(site, time_key):
     return predictions[0][1] if predictions and predictions[0][1] is not None else None
 
 
-def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: int = 5) -> List[Tuple[float, float, List[str]]]:
-    heap = [(0, 0, [start], start_time, set())]
+def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: int = 5, max_penalty: int = 500, max_shared_segments: float = 0.7) -> List[Tuple[float, float, List[str]]]:
+    heap = [(0, 0, [start], start_time, set())]  # (estimated_time, distance, path, current_time, visited)
     visited = {}
     efficient_paths = []
-    path_diversity_penalty = {}
+    segment_penalty = {}
     unique_paths = set()
 
-    def apply_diversity_penalty(path):
+    def apply_segment_penalty(path):
+        """Apply a penalty to segments (node pairs) already used in previous paths to encourage diversity."""
         penalty = 0
-        for i, node in enumerate(path):
-            penalty += path_diversity_penalty.get(node, 0) * (0.5 ** i)  # Exponential decay
+        for i in range(len(path) - 1):
+            segment = (path[i], path[i + 1])
+            penalty += min(segment_penalty.get(segment, 0) * 2, max_penalty)  # Reduced multiplier for penalties
         return penalty
+
+    def path_overlap(path1, path2):
+        """Calculate the percentage of shared segments between two paths."""
+        segments1 = set((path1[i], path1[i + 1]) for i in range(len(path1) - 1))
+        segments2 = set((path2[i], path2[i + 1]) for i in range(len(path2) - 1))
+        shared_segments = segments1.intersection(segments2)
+        return len(shared_segments) / len(segments1)  # Return the proportion of shared segments
 
     while heap and len(efficient_paths) < num_paths:
         (estimated_time, current_distance, path, current_time, visited_set) = heapq.heappop(heap)
-
         current = path[-1]
+
         if current == end:
-            if tuple(path) not in unique_paths:
-                efficient_paths.append((estimated_time, current_distance, path))
-                unique_paths.add(tuple(path))
-                for i, node in enumerate(path):
-                    path_diversity_penalty[node] = path_diversity_penalty.get(node, 0) + 1
+            # Ensure that the new path does not share too many segments with already discovered paths
+            if all(path_overlap(path, p[2]) < max_shared_segments for p in efficient_paths):
+                if tuple(path) not in unique_paths:
+                    efficient_paths.append((estimated_time, current_distance, path))
+                    unique_paths.add(tuple(path))
+
+                    # Increase penalties for the segments in the found path to encourage exploration
+                    for i in range(len(path) - 1):
+                        segment = (path[i], path[i + 1])
+                        segment_penalty[segment] = segment_penalty.get(segment, 0) + 1
+
+            if len(efficient_paths) >= num_paths:
+                break
+
             continue
 
+        # Avoid visiting the same place at the same time again
         time_key = int(current_time.timestamp() / 300) * 300
         if current in visited and visited[current] <= time_key:
             continue
         visited[current] = time_key
 
-        # Introduce forced diversity for the first few steps
-        if len(path) <= 3:
-            neighbors_list = list(neighbors.get(current, []))
-            random.shuffle(neighbors_list)
-        else:
-            neighbors_list = neighbors.get(current, [])
+        # Explore neighbors
+        neighbors_list = list(neighbors.get(current, []))
+        random.shuffle(neighbors_list)  # Shuffle neighbors to encourage diverse paths
 
         for neighbor in neighbors_list:
             if neighbor in visited_set:
@@ -129,21 +145,17 @@ def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: 
             elif isinstance(flow_prediction, (int, float)):
                 flow_current = flow_prediction
             else:
-                print(f"Warning: Unexpected flow prediction for site {current}: {flow_prediction}")
                 flow_current = None
 
             if flow_current is not None:
                 try:
                     segment_time = calculate_travel_time(flow_current, segment_distance)
-                    # Increase randomness
-                    segment_time *= random.uniform(0.8, 1.2)
-                    # Apply diversity penalty to partial path
-                    segment_time += apply_diversity_penalty(path + [neighbor]) * 2
+                    segment_time *= random.uniform(0.9, 1.1)  # Randomness for variability
+                    segment_time += apply_segment_penalty(path + [neighbor])  # Add penalty to influence diversity
                 except TypeError as e:
-                    print(f"Error calculating travel time for site {current}: {e}")
-                    segment_time = segment_distance / 0.5
+                    segment_time = segment_distance / 0.5  # Fall back to a default speed if error
             else:
-                segment_time = segment_distance / 0.5
+                segment_time = segment_distance / 0.5  # Fall back if no traffic data
 
             new_estimated_time = estimated_time + segment_time
             new_distance = current_distance + segment_distance
@@ -152,9 +164,10 @@ def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: 
             new_visited_set = visited_set.copy()
             new_visited_set.add(neighbor)
 
+            # Add new path to heap
             heapq.heappush(heap, (new_estimated_time, new_distance, new_path, new_current_time, new_visited_set))
 
-    # If we haven't found enough paths, relax the constraints and continue searching
+    # If fewer than 5 paths were found, relax penalties and continue searching
     while len(efficient_paths) < num_paths and heap:
         (estimated_time, current_distance, path, current_time, visited_set) = heapq.heappop(heap)
         if path[-1] == end and tuple(path) not in unique_paths:
@@ -162,6 +175,8 @@ def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: 
             unique_paths.add(tuple(path))
 
     return sorted(efficient_paths)[:num_paths]
+
+
 
 
 def pathfinder(start: str, end: str, start_time: datetime, model_type: str) -> List[Tuple[float, float, List[str]]]:
@@ -180,7 +195,7 @@ if __name__ == "__main__":
 
     efficient_paths = pathfinder(start, end, start_time, model_type)
 
-    print(f"\nTop {len(efficient_paths)} most time-efficient routes from {start} to {end}:")
+    print(f"\nTop 5 most time-efficient routes from {start} to {end}:")
     for i, (estimated_time, total_distance, path) in enumerate(efficient_paths, 1):
         print(f"{i}. Estimated time: {estimated_time:.2f} minutes")
         print(f"   Number of intersections: {len(path) - 1}")
