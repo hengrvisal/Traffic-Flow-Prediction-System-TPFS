@@ -8,6 +8,7 @@ from data.data import process_data
 from model import model
 from keras.models import Model
 from keras.callbacks import EarlyStopping
+
 warnings.filterwarnings("ignore")
 
 
@@ -16,10 +17,10 @@ def get_scats_sites(data_dir):
     # Get all the train file names from the folder
     files = os.listdir(data_dir)
     train_files = [f for f in files if 'train' in f]
-    
+
     # Extract SCATS IDs (e.g., '2000', '2200', etc.)
     scats_sites = [f.split('_')[0] for f in train_files]
-    
+
     return scats_sites
 
 
@@ -46,7 +47,7 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",
-        default="gru",
+        default="saes",
         help="Model to train.")
     args = parser.parse_args()
 
@@ -75,7 +76,8 @@ def main(argv):
         elif args.model == 'saes':
             # For SAES, combine flow data with time features
             X_train = np.concatenate((X_train, X_train_time), axis=1)
-            m = model.get_saes([X_train.shape[1], 400, 400, 400, 1])
+            models = model.get_saes([X_train.shape[1], 400, 400, 400, 1])
+            m = models[-1]
 
         train_model(m, X_train, y_train, args.model, config, site)
 
