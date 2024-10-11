@@ -40,7 +40,7 @@ def distance_path(path):
     return distance
 
 
-#Testing on an example
+# Testing on an example
 neighbor = load_neighbors()
 start = "970"
 end = "2827"
