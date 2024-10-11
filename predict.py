@@ -47,26 +47,25 @@ def prepare_input_data(date_time, input_shape, model_type):
         for i in range(input_shape[0]):
             dt = date_time + timedelta(minutes=5*i)
             features = [
-                dt.hour / 24.0,
-                dt.minute / 60.0,
-                dt.weekday() / 6.0,
-                dt.day / 31.0,
-                dt.month / 12.0
+                dt.hour / 23.0,  # Hour normalized to [0, 1]
+                dt.minute / 59.0,  # Minute normalized to [0, 1]
+                dt.weekday() / 6.0,  # Weekday normalized to [0, 1]
+                int(dt.weekday() < 5),  # Is weekday (1) or weekend (0)
+                dt.day / 31.0,  # Day of month normalized to [0, 1]
+                (dt.month - 1) / 11.0  # Month normalized to [0, 1]
             ]
             data.append(features[:input_shape[1]])
         return np.array(data).reshape((1,) + input_shape)
     elif model_type == 'SAES':
-        # For SAES, we'll create an 18-feature input
-        # First 5 features are time-based, last 13 are placeholders for recent traffic data
         features = [
-            date_time.hour / 24.0,
-            date_time.minute / 60.0,
+            date_time.hour / 23.0,
+            date_time.minute / 59.0,
             date_time.weekday() / 6.0,
+            int(date_time.weekday() < 5),
             date_time.day / 31.0,
-            date_time.month / 12.0
+            (date_time.month - 1) / 11.0
         ]
-        # Add 13 placeholder values for recent traffic data
-        features.extend([0.5] * 13)  # Using 0.5 as a neutral placeholder value
+        features.extend([0.5] * 12)  # Placeholder for recent traffic data
         return np.array(features).reshape(1, 18)
 
 
@@ -75,7 +74,9 @@ def denormalize_prediction(prediction, min_value=0, max_value=500):
 
 
 def interpret_traffic_flow(value):
-    if value < 50:
+    if value < 30:
+        return "Very low traffic"
+    elif value < 75:
         return "Low traffic"
     elif value < 150:
         return "Moderate traffic"
@@ -85,8 +86,26 @@ def interpret_traffic_flow(value):
         return "Very high traffic"
 
 
+def apply_time_adjustment(prediction, hour, is_weekday):
+    # Base factors
+    time_factors = {
+        0: 0.3, 1: 0.2, 2: 0.15, 3: 0.15, 4: 0.2, 5: 0.4,  # Early morning
+        6: 0.6, 7: 0.9, 8: 1.1, 9: 1.0,  # Morning rush
+        10: 0.9, 11: 0.9, 12: 1.0, 13: 1.0, 14: 1.0,  # Midday
+        15: 1.1, 16: 1.2, 17: 1.2, 18: 1.1,  # Evening rush
+        19: 0.9, 20: 0.8, 21: 0.7, 22: 0.5, 23: 0.4  # Night
+    }
+
+    # Adjust factors for weekends
+    if not is_weekday:
+        time_factors = {h: max(0.5, f * 0.7) for h, f in time_factors.items()}
+
+    return max(0, prediction * time_factors.get(hour, 1.0))
+
+
 def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
     predictions = []
+    is_weekday = date_time.weekday() < 5
     for site in path:
         model = load_model_for_site(site, model_type)
         if model:
@@ -98,8 +117,12 @@ def predict_traffic_flow(path, date_time, model_type, recent_traffic_data=None):
             input_data = prepare_input_data(date_time, input_shape, model_type)
             try:
                 prediction = model.predict(input_data)
-                denormalized_prediction = denormalize_prediction(prediction[0][0], 500, 0)
-                predictions.append((site, denormalized_prediction, input_shape))
+                print(f"Raw prediction for site {site}: {prediction[0][0]}")  # Debug output
+                denormalized_prediction = denormalize_prediction(prediction[0][0], 0, 500)
+                print(f"Denormalized prediction for site {site}: {denormalized_prediction}")  # Debug output
+                adjusted_prediction = apply_time_adjustment(denormalized_prediction, date_time.hour, is_weekday)
+                print(f"Time-adjusted prediction for site {site}: {adjusted_prediction}")  # Debug output
+                predictions.append((site, int(adjusted_prediction), input_shape))
             except Exception as e:
                 print(f"Error predicting for site {site}: {str(e)}")
                 predictions.append((site, None, input_shape))
