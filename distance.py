@@ -41,10 +41,10 @@ def distance_path(path):
 
 
 # Testing on an example
-neighbor = load_neighbors()
-start = "970"
-end = "2827"
-path = find_path(start, end, neighbor)
-print("Path:", path)
-
-print(distance_path(path))
+# neighbor = load_neighbors()
+# start = "970"
+# end = "2200"
+# path = find_path(start, end, neighbor)
+# print("Path:", path)
+#
+# print(distance_path(path))
