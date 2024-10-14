@@ -177,8 +177,6 @@ def find_efficient_paths(start: str, end: str, start_time: datetime, num_paths: 
     return sorted(efficient_paths)[:num_paths]
 
 
-
-
 def pathfinder(start: str, end: str, start_time: datetime, model_type: str) -> List[Tuple[float, float, List[str]]]:
     load_all_models(model_type)
     random.seed(0)  # Reset random seed for consistency
