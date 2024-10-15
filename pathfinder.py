@@ -27,47 +27,34 @@ def load_all_models(model_type: str):
         if site not in models:
             models[site] = load_model_for_site(site, model_type)
 
-def calculate_speed(site, current_time):
+def calculate_speed(traffic_flow, is_peak_hour):
     # Constants
-    CAPACITY_FLOW = 500   # vehicles/hour
-    CAPACITY_SPEED = 32   # km/hr
-    SPEED_LIMIT = 60      # km/hr
-    FLOW_AT_SPEED_LIMIT = 117  # vehicles/hour
-    MIN_SPEED = 10        # km/hr
-    MAX_FLOW = 1000       # vehicles/hour
+    CAPACITY_FLOW = 250   # vehicles/5min (3000 vehicles/hour)
+    CAPACITY_SPEED = 35   # km/hr
+    SPEED_LIMIT = 60 if not is_peak_hour else 50  # km/hr
+    FLOW_AT_SPEED_LIMIT = 60  # vehicles/5min (720 vehicles/hour)
+    MIN_SPEED = 25        # km/hr
 
-    # Get traffic prediction
-    predictions = predict_traffic_flow([site], current_time, global_model_type)
-    if predictions and predictions[0][1] is not None:
-        hourly_flow = predictions[0][1] * 12  # Convert from vehicles/5min to vehicles/hour
-    else:
-        hourly_flow = FLOW_AT_SPEED_LIMIT  # Default to flow at speed limit if no prediction
+    # Clamp traffic flow to a maximum value
+    traffic_flow = min(traffic_flow, CAPACITY_FLOW * 2)
 
-    if hourly_flow <= FLOW_AT_SPEED_LIMIT:
+    if traffic_flow <= FLOW_AT_SPEED_LIMIT:
         return SPEED_LIMIT
-    elif hourly_flow <= CAPACITY_FLOW:
-        # Under capacity: Parabolic decrease from speed limit to capacity speed
-        flow_diff = hourly_flow - FLOW_AT_SPEED_LIMIT
-        max_flow_diff = CAPACITY_FLOW - FLOW_AT_SPEED_LIMIT
+    elif traffic_flow <= CAPACITY_FLOW:
+        # Non-linear decrease from speed limit to capacity speed
+        flow_ratio = (traffic_flow - FLOW_AT_SPEED_LIMIT) / (CAPACITY_FLOW - FLOW_AT_SPEED_LIMIT)
         speed_diff = SPEED_LIMIT - CAPACITY_SPEED
-        return SPEED_LIMIT - (flow_diff / max_flow_diff) ** 2 * speed_diff
+        return SPEED_LIMIT - (flow_ratio ** 1.5) * speed_diff
     else:
-        # Over capacity: Linear decrease from capacity speed to minimum speed
-        over_capacity = hourly_flow - CAPACITY_FLOW
-        max_over_capacity = MAX_FLOW - CAPACITY_FLOW
-        speed_decrease = (CAPACITY_SPEED - MIN_SPEED) * (over_capacity / max_over_capacity)
+        # Sharper decrease for over-capacity
+        over_capacity = traffic_flow - CAPACITY_FLOW
+        speed_decrease = min(20, over_capacity / 10)  # Max 20 km/h decrease for very high traffic
         return max(MIN_SPEED, CAPACITY_SPEED - speed_decrease)
-
-def calculate_travel_time(site, distance, current_time):
-    speed = calculate_speed(site, current_time)
-    travel_time = (distance / speed) * 60  # time in minutes
-    intersection_delay = 0.5  # minutes
-    return travel_time + intersection_delay
 
 def find_multiple_paths(start: str, end: str, start_time: datetime, num_paths: int = 5) -> List[Tuple[float, float, List[str], float]]:
     heap = [(0, 0, [start], start_time, 0)]  # (estimated_time, distance, path, current_time, total_flow)
     paths = []
-    visited = set()
+    visited = {}
 
     while heap and len(paths) < num_paths:
         (estimated_time, current_distance, path, current_time, total_flow) = heapq.heappop(heap)
@@ -79,32 +66,34 @@ def find_multiple_paths(start: str, end: str, start_time: datetime, num_paths: i
             continue
 
         visit_key = (current, current_time.strftime("%Y-%m-%d %H:%M"))  # Round to nearest minute
-        if visit_key in visited:
+        if visit_key in visited and visited[visit_key] <= estimated_time:
             continue
-        visited.add(visit_key)
+        visited[visit_key] = estimated_time
+
+        predictions = predict_traffic_flow([current], current_time, global_model_type)
+        if predictions and predictions[0][0] is not None:
+            flow_prediction = predictions[0][0]
+        else:
+            flow_prediction = 20  # Default value if prediction fails
+
+        is_peak_hour = 7 <= current_time.hour <= 9 or 16 <= current_time.hour <= 18
 
         for neighbor in neighbors.get(current, []):
             if neighbor in path:
                 continue
 
             segment_distance = get_distance(current, neighbor)
-            segment_time = calculate_travel_time(current, segment_distance, current_time)
+            speed = calculate_speed(flow_prediction, is_peak_hour)
+            segment_time = (segment_distance / speed) * 60  # time in minutes
 
             new_estimated_time = estimated_time + segment_time
             new_distance = current_distance + segment_distance
             new_current_time = current_time + timedelta(minutes=segment_time)
-
-            # Get traffic prediction for total flow calculation
-            predictions = predict_traffic_flow([current], new_current_time, global_model_type)
-            if predictions and predictions[0][1] is not None:
-                flow_prediction = predictions[0][1] * 12  # Convert from vehicles/5min to vehicles/hour
-            else:
-                flow_prediction = 0  # Use 0 if no prediction available
             new_total_flow = total_flow + flow_prediction
 
             heapq.heappush(heap, (new_estimated_time, new_distance, path + [neighbor], new_current_time, new_total_flow))
 
-    return sorted(paths, key=lambda x: x[0])  # Sort by estimated time
+    return sorted(paths, key=lambda x: x[0])[:num_paths]  # Sort by estimated time and return top num_paths
 
 def pathfinder(start: str, end: str, start_time: datetime, model_type: str) -> List[Tuple[float, float, List[str], float]]:
     global global_model_type
@@ -122,12 +111,12 @@ if __name__ == "__main__":
 
     efficient_paths = pathfinder(start, end, start_time, model_type)
 
-    print(f"\nTop 5 most time-efficient routes from {start} to {end} at {start_time}:")
+    print(f"\nTop {len(efficient_paths)} most time-efficient routes from {start} to {end} at {start_time}:")
     for i, (estimated_time, total_distance, path, avg_traffic) in enumerate(efficient_paths, 1):
         print(f"{i}. Estimated time: {estimated_time:.2f} minutes")
         print(f"   Number of intersections: {len(path) - 1}")
         print(f"   Total distance: {total_distance:.2f} km")
-        print(f"   Average traffic: {avg_traffic:.2f} vehicles/hour")
+        print(f"   Average traffic: {avg_traffic:.2f} vehicles/5min")
         print(f"   Path: {' -> '.join(path)}")
         print()
 

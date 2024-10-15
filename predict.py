@@ -81,17 +81,17 @@ def interpret_traffic_flow(value):
 
 def apply_time_adjustment(prediction, hour, is_weekday):
     time_factors = {
-        0: 0.3, 1: 0.2, 2: 0.15, 3: 0.15, 4: 0.2, 5: 0.4,  # Early morning
-        6: 0.6, 7: 0.9, 8: 1.1, 9: 1.0,  # Morning rush
-        10: 0.9, 11: 0.9, 12: 1.0, 13: 1.0, 14: 1.0,  # Midday
-        15: 1.1, 16: 1.2, 17: 1.2, 18: 1.1,  # Evening rush
-        19: 0.9, 20: 0.8, 21: 0.7, 22: 0.5, 23: 0.4  # Night
+        0: 0.6, 1: 0.5, 2: 0.4, 3: 0.4, 4: 0.5, 5: 0.7,  # Early morning
+        6: 0.9, 7: 1.4, 8: 1.5, 9: 1.3,  # Morning rush
+        10: 1.1, 11: 1.1, 12: 1.2, 13: 1.2, 14: 1.1,  # Midday
+        15: 1.2, 16: 1.5, 17: 1.6, 18: 1.4,  # Evening rush
+        19: 1.2, 20: 1.0, 21: 0.9, 22: 0.8, 23: 0.7  # Night
     }
 
     if not is_weekday:
-        time_factors = {h: max(0.5, f * 0.7) for h, f in time_factors.items()}
+        time_factors = {h: max(0.6, f * 0.8) for h, f in time_factors.items()}
 
-    return max(0, prediction * time_factors.get(hour, 1.0))
+    return prediction * time_factors.get(hour, 1.0)
 
 @lru_cache(maxsize=10000)
 def cached_predict(site, date_time, model_type):
@@ -105,10 +105,25 @@ def cached_predict(site, date_time, model_type):
         input_data = prepare_input_data(date_time, input_shape, model_type)
         try:
             prediction = model.predict(input_data)
-            denormalized_prediction = denormalize_prediction(prediction[0][0], 0, 500)
+
+            # Model-specific processing
+            if model_type in ['LSTM', 'GRU']:
+                # LSTM and GRU might output a sequence, take the last value
+                prediction = prediction[0][-1] if len(prediction[0]) > 1 else prediction[0][0]
+            else:  # SAES
+                prediction = prediction[0][0]
+
+            # Denormalize prediction
+            denormalized_prediction = denormalize_prediction(prediction, 0, 500)
+
+            # Apply time adjustment
             is_weekday = date_time.weekday() < 5
             adjusted_prediction = apply_time_adjustment(denormalized_prediction, date_time.hour, is_weekday)
-            return int(adjusted_prediction), input_shape
+
+            # Clamp prediction to a reasonable range
+            final_prediction = max(0, min(adjusted_prediction, 500))
+
+            return int(final_prediction), input_shape
         except Exception as e:
             print(f"Error predicting for site {site}: {str(e)}")
     return None, None
