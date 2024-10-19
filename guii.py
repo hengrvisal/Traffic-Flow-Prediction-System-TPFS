@@ -181,6 +181,10 @@ class TrafficFlowGUI(tk.Tk):
         self.result_text.insert(tk.END, text)
         self.result_text.config(state='disabled')
 
+
+
+#### view route using map 
+
     def view_route(self):
         if not self.generated_paths:
             # If no routes are generated, show SCATS locations
