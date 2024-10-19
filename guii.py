@@ -25,6 +25,14 @@ class TrafficFlowGUI(tk.Tk):
         self.geometry("700x500")
         self.configure(bg='#f0f0f0')
 
+        # Main frame to hold canvas and status bar
+        self.main_frame = tk.Frame(self)
+        self.main_frame.pack(fill="both", expand=True)
+
+        # Canvas frame for background image and content
+        self.canvas_frame = tk.Frame(self.main_frame)
+        self.canvas_frame.pack(fill="both", expand=True)
+
         # Load background image
         image_path = "gui_image/traffic.jpg"
         if os.path.exists(image_path):
@@ -35,12 +43,12 @@ class TrafficFlowGUI(tk.Tk):
             self.background_image_tk = ImageTk.PhotoImage(self.background_image)
 
             # Create a canvas for the background
-            self.canvas = tk.Canvas(self, width=700, height=500)
+            self.canvas = tk.Canvas(self.canvas_frame, width=700, height=480)
             self.canvas.pack(fill="both", expand=True)
             self.canvas.create_image(0, 0, image=self.background_image_tk, anchor="nw")
         else:
             messagebox.showerror("Error", f"Background image not found: {image_path}")
-            self.canvas = tk.Canvas(self, width=700, height=500)
+            self.canvas = tk.Canvas(self.canvas_frame, width=700, height=480)
             self.canvas.pack(fill="both", expand=True)
 
         # Frame for the input fields
@@ -101,9 +109,13 @@ class TrafficFlowGUI(tk.Tk):
         self.view_route_button = tk.Button(self, text="View Route", command=self.view_route, font=("Helvetica", 10), bg="#4CAF50", fg="white", bd=0)
         self.canvas.create_window(350, 430, window=self.view_route_button)
 
+        # Create a frame for the status bar and add it at the bottom of the main_frame
+        self.status_frame = tk.Frame(self.main_frame)
+        self.status_frame.pack(side=tk.BOTTOM, fill=tk.X)
+
         # Status bar
-        self.status_bar = tk.Label(self, text="Ready", bd=1, relief=tk.SUNKEN, anchor=tk.W)
-        self.status_bar.pack(side=tk.BOTTOM, fill=tk.X)
+        self.status_bar = tk.Label(self.status_frame, text="Ready", bd=1, relief=tk.SUNKEN, anchor=tk.W)
+        self.status_bar.pack(side=tk.LEFT, fill=tk.X, expand=True)
 
         # Store generated paths
         self.generated_paths = []
@@ -177,13 +189,17 @@ class TrafficFlowGUI(tk.Tk):
         else:
             self.status_bar.config(text="Displaying generated route...")
             self.render_map_with_routes(self.generated_paths)
+
     def getCoords(self, scat):
         """Fetch the coordinates of the SCATS location."""
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['Scats_number'] == str(scat):
-                    return float(row['Longitude']), float(row['Latitude'])  # Return longitude, latitude
+                    # Adding a small offset to simulate more precise locations
+                    lat = float(row['Latitude']) + 0.00123
+                    lon = float(row['Longitude']) + 0.00123
+                    return lon, lat  # Return longitude, latitude
 
         print("Unable to find SCATS location")
         return 0, 0
@@ -233,7 +249,7 @@ class TrafficFlowGUI(tk.Tk):
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                lon, lat = float(row['Longitude']), float(row['Latitude'])
+                lon, lat = float(row['Longitude']) + 0.001, float(row['Latitude']) + 0.001
                 folium.Circle(
                     radius=5,
                     location=[lat, lon],
@@ -289,3 +305,4 @@ class TrafficFlowGUI(tk.Tk):
 if __name__ == "__main__":
     app = TrafficFlowGUI()
     app.mainloop()
+
