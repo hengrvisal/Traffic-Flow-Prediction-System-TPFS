@@ -25,7 +25,7 @@ class TrafficFlowGUI(tk.Tk):
         if os.path.exists(image_path):
             self.background_image = Image.open(image_path).convert("RGBA")
             enhancer = ImageEnhance.Brightness(self.background_image)
-            self.background_image = enhancer.enhance(0.6)
+            self.background_image = enhancer.enhance(0.7)
             self.background_image = self.background_image.resize((700, 500), Image.LANCZOS)
             self.background_image_tk = ImageTk.PhotoImage(self.background_image)
 
