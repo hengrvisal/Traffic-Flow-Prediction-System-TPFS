@@ -201,23 +201,29 @@ class TrafficFlowGUI(tk.Tk):
             self.render_map_with_routes(self.generated_paths)
 
     def getCoords(self, scat):
-        """Fetching the coordinates of the SCATS location."""
+        """    Fetch the coordinates and description of the SCATS location.    """
         scat = str(scat).strip()
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 if row['Scats_number'].strip() == scat:
-                    
-                    lat = float(row['Latitude']) + 0.00123
-                    lon = float(row['Longitude']) + 0.00123
-                    print(f"Coordinates for SCATS {scat}: ({lon}, {lat})")
-                    return lon, lat  # Return longitude, latitude
+                    try:
+                        # Get latitude, longitude, and description
+                        lat = float(row['Latitude']) + 0.00123
+                        lon = float(row['Longitude']) + 0.00123
+                        description = row.get('Site description', 'No description available')
+                        print(f"Coordinates for SCATS {scat}: ({lon}, {lat}) with description: {description}")
+                        return lon, lat, description  # Return longitude, latitude, and description
+                    except ValueError:
+                        # Handle case where latitude or longitude are not valid floats
+                        print(f"Invalid latitude or longitude for SCATS {scat}")
+                        return None
 
         print(f"Unable to find SCATS location for {scat}")
-        return 0, 0
+        return None
 
     def generate_geojson(self, routes):
-        """Generating GeoJSON data for routes."""
+        """    Generating GeoJSON data for routes.    """
         print("Generating GeoJSON for routes:", routes)
         data = {
             "type": "FeatureCollection",
@@ -233,15 +239,17 @@ class TrafficFlowGUI(tk.Tk):
             path = route[2]  # Extracting the path list
 
             for scat in path:
-                # Addition of coordinates only if the SCATS number is valid 
+                # Add coordinates only if the SCATS number is valid
                 if isinstance(scat, str) and scat.isdigit():
-                    lon, lat = self.getCoords(scat)
-                    if lon != 0 and lat != 0:  # Check for calidation of coordinates 
-                        coords.append([lon, lat])
-                else:
-                    print(f"Skipping invalid SCATS: {scat}")
+                    coord_data = self.getCoords(scat)
+                    if coord_data:
+                        lon, lat, _ = coord_data  # Unpack the longitude, latitude, and description
+                        if lon != 0 and lat != 0:  # Check if coordinates are valid
+                            coords.append([lon, lat])
+                    else:
+                        print(f"Skipping invalid SCATS: {scat}")
 
-            if coords:  # Addition of  feature only if coordinates are found
+            if coords:  # Add feature only if coordinates are found
                 feature = {
                     "type": "Feature",
                     "properties": {
@@ -256,23 +264,25 @@ class TrafficFlowGUI(tk.Tk):
                 data["features"].append(feature)
 
         return json.dumps(data)
+
     def draw_markers(self, map_obj, src, dest):
-        """Drawing markers for the source and destination."""
+        """    Drawing markers for the source and destination.    """
         src_coords = self.getCoords(src)
         dest_coords = self.getCoords(dest)
         if src_coords and isinstance(src, str) and src.isdigit():
-            src_lon, src_lat = src_coords
-            folium.Marker([src_lat, src_lon], popup=f"<strong>Start</strong> SCATS: {src}",
+            src_lon, src_lat, src_description = src_coords
+            folium.Marker([src_lat, src_lon], popup=f"<strong>Start</strong>  <br><strong>SCATS:</strong> {src}<br><strong>SITE:</strong> {src_description}",
                           icon=folium.Icon(color='red', icon='circle', prefix='fa')).add_to(map_obj)
         else:
             print(f"Unable to plot marker for the start SCATS: {src}")
 
         if dest_coords and isinstance(dest, str) and dest.isdigit():
-            dest_lon, dest_lat = dest_coords
-            folium.Marker([dest_lat, dest_lon], popup=f"<strong>Finish</strong> SCATS: {dest}",
+            dest_lon, dest_lat, dest_description = dest_coords
+            folium.Marker([dest_lat, dest_lon], popup=f"<strong>Finish</strong> <br><strong>SCATS:</strong> {dest}<br><strong>SITE:</strong> {src_description}",
                           icon=folium.Icon(color='green', icon='flag', prefix='fa')).add_to(map_obj)
         else:
             print(f"Unable to plot marker for the finish SCATS: {dest}")
+
 
     def render_map_with_routes(self, routes):
         """Render the map with the generated routes."""
@@ -300,22 +310,27 @@ class TrafficFlowGUI(tk.Tk):
         webbrowser.open("index.html")
 
 
-# Scenario where in user inputs a starting and destination path for which no paths were generate but the user choose to click the View Route button then the user is lead to a map with a marked 40 nodes 
+# Scenario where in user inputs a starting and destination path for which no paths were generate or the user didn't pessed the Generate route button but the user choose to click the View Route button then the user is lead to a map with a marked 40 nodes 
 
     def draw_nodes(self, map_obj):
-        """Drawing all SCATS nodes on the map."""
+        """    Drawing all SCATS nodes on the map with SCATS number and site description tooltips.    """
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                lon, lat = float(row['Longitude']) + 0.00123, float(row['Latitude']) + 0.00123
-                folium.Circle(
-                    radius=5,
-                    location=[lat, lon],
-                    popup=f"SCATS: {row['Scats_number']}",
-                    color="#5A5A5A",
-                    fill=False
-                ).add_to(map_obj)
-
+                try:
+                    lon, lat = float(row['Longitude']) + 0.00123, float(row['Latitude']) + 0.00123
+                    scat_number = row['Scats_number']
+                    site_description = row.get('Site description', 'No description available')                    
+                    folium.Circle(
+                        radius=5,
+                        location=[lat, lon],                        
+                        tooltip=f"SCATS: {scat_number}, SITE: {site_description}",
+                        color="#5A5A5A",
+                        fill=True,
+                        fill_opacity=0.7
+                    ).add_to(map_obj)
+                except ValueError:
+                    print(f"Invalid latitude or longitude for SCATS {row['Scats_number']}")
     
 
     def render_map_with_scat_sites(self):

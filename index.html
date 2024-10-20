@@ -25,7 +25,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_330790b3715b95ec23f6d72b6cd8b7e9 {
+                #map_3348db0842bb84d7d2afb0049ff827ce {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -39,14 +39,14 @@
 <body>
     
     
-            <div class="folium-map" id="map_330790b3715b95ec23f6d72b6cd8b7e9" ></div>
+            <div class="folium-map" id="map_3348db0842bb84d7d2afb0049ff827ce" ></div>
         
 </body>
 <script>
     
     
-            var map_330790b3715b95ec23f6d72b6cd8b7e9 = L.map(
-                "map_330790b3715b95ec23f6d72b6cd8b7e9",
+            var map_3348db0842bb84d7d2afb0049ff827ce = L.map(
+                "map_3348db0842bb84d7d2afb0049ff827ce",
                 {
                     center: [-37.831219, 145.056965],
                     crs: L.CRS.EPSG3857,
@@ -60,16 +60,16 @@
 
         
     
-            var tile_layer_6a18728009a36f27d98313bee6644ffe = L.tileLayer(
+            var tile_layer_8a0e68212be8a9625ea1ec30ef0662d9 = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 20, "maxZoom": 20, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abcd", "tms": false}
             );
         
     
-            tile_layer_6a18728009a36f27d98313bee6644ffe.addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+            tile_layer_8a0e68212be8a9625ea1ec30ef0662d9.addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        function geo_json_81d8644c605380fdee7956b885351a82_styler(feature) {
+        function geo_json_5634ba26973c80b336bd9ebc9071cb41_styler(feature) {
             switch(feature.id) {
                 case "0": case "1": case "2": case "3": 
                     return {"color": "#757575", "weight": 5};
@@ -78,919 +78,639 @@
             }
         }
 
-        function geo_json_81d8644c605380fdee7956b885351a82_onEachFeature(feature, layer) {
+        function geo_json_5634ba26973c80b336bd9ebc9071cb41_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_81d8644c605380fdee7956b885351a82 = L.geoJson(null, {
-                onEachFeature: geo_json_81d8644c605380fdee7956b885351a82_onEachFeature,
+        var geo_json_5634ba26973c80b336bd9ebc9071cb41 = L.geoJson(null, {
+                onEachFeature: geo_json_5634ba26973c80b336bd9ebc9071cb41_onEachFeature,
             
-                style: geo_json_81d8644c605380fdee7956b885351a82_styler,
+                style: geo_json_5634ba26973c80b336bd9ebc9071cb41_styler,
         });
 
-        function geo_json_81d8644c605380fdee7956b885351a82_add (data) {
-            geo_json_81d8644c605380fdee7956b885351a82
+        function geo_json_5634ba26973c80b336bd9ebc9071cb41_add (data) {
+            geo_json_5634ba26973c80b336bd9ebc9071cb41
                 .addData(data);
         }
-            geo_json_81d8644c605380fdee7956b885351a82_add({"features": [{"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.06374, -37.794380000000004], [145.06324999999998, -37.78538], [145.07855999999998, -37.7797], [145.07083, -37.79296]], "type": "LineString"}, "id": "0", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.0832, -37.80308], [145.08495, -37.79488], [145.07083, -37.79296]], "type": "LineString"}, "id": "1", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.0506911, -37.799546], [145.06374, -37.794380000000004], [145.07083, -37.79296]], "type": "LineString"}, "id": "2", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.06374, -37.794380000000004], [145.07083, -37.79296]], "type": "LineString"}, "id": "3", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.0832, -37.80308], [145.08495, -37.79488], [145.07083, -37.79296]], "type": "LineString"}, "id": "4", "properties": {"stroke": "#3484F0", "stroke-width": 5}, "type": "Feature"}], "type": "FeatureCollection"});
+            geo_json_5634ba26973c80b336bd9ebc9071cb41_add({"features": [{"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.0832, -37.80308], [145.08495, -37.79488], [145.07083, -37.79296]], "type": "LineString"}, "id": "0", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.07923, -37.82383], [145.06589, -37.82256], [145.06369999999998, -37.83208], [145.05668, -37.83133], [145.05857, -37.82141], [145.0595903, -37.8160354], [145.06069, -37.81024], [145.0625, -37.80079], [145.06374, -37.794380000000004], [145.07083, -37.79296]], "type": "LineString"}, "id": "1", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.05398, -37.8456], [145.05668, -37.83133], [145.06369999999998, -37.83208], [145.06589, -37.82256], [145.05857, -37.82141], [145.0595903, -37.8160354], [145.06069, -37.81024], [145.0625, -37.80079], [145.06374, -37.794380000000004], [145.07083, -37.79296]], "type": "LineString"}, "id": "2", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.06069, -37.81024], [145.0625, -37.80079], [145.06374, -37.794380000000004], [145.07083, -37.79296]], "type": "LineString"}, "id": "3", "properties": {"stroke": "#757575", "stroke-width": 5}, "type": "Feature"}, {"geometry": {"coordinates": [[145.09282, -37.8658], [145.09507, -37.85344], [145.09557569999998, -37.8504527], [145.09822, -37.83572], [145.10008, -37.82655], [145.09935, -37.81508], [145.08132999999998, -37.81281], [145.0832, -37.80308], [145.08495, -37.79488], [145.07083, -37.79296]], "type": "LineString"}, "id": "4", "properties": {"stroke": "#3484F0", "stroke-width": 5}, "type": "Feature"}], "type": "FeatureCollection"});
 
         
     
-            geo_json_81d8644c605380fdee7956b885351a82.addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+            geo_json_5634ba26973c80b336bd9ebc9071cb41.addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-            var marker_d67c40de898ab0dba176dc7619b1fcb3 = L.marker(
+            var marker_2bb4a32640a625bd64ec2d43ad57c0ae = L.marker(
                 [-37.8658, 145.09282],
                 {}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-            var icon_0da2847a2f71f34ac0b79c075043dc0c = L.AwesomeMarkers.icon(
+            var icon_97d7da7a91f57fe7de3ed514767905f8 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "circle", "iconColor": "white", "markerColor": "red", "prefix": "fa"}
             );
-            marker_d67c40de898ab0dba176dc7619b1fcb3.setIcon(icon_0da2847a2f71f34ac0b79c075043dc0c);
+            marker_2bb4a32640a625bd64ec2d43ad57c0ae.setIcon(icon_97d7da7a91f57fe7de3ed514767905f8);
         
     
-        var popup_158c21bdfa0642fd1a0fd532e53af5bd = L.popup({"maxWidth": "100%"});
+        var popup_bc1a05e56b07fd8e4b571b05b8a9198f = L.popup({"maxWidth": "100%"});
 
         
             
-                var html_5523a79f2dd8090f71be9e7364d27aad = $(`<div id="html_5523a79f2dd8090f71be9e7364d27aad" style="width: 100.0%; height: 100.0%;"><strong>Start</strong> SCATS: 970</div>`)[0];
-                popup_158c21bdfa0642fd1a0fd532e53af5bd.setContent(html_5523a79f2dd8090f71be9e7364d27aad);
+                var html_2891e650e3d9f8def6d8514c5fe25c8a = $(`<div id="html_2891e650e3d9f8def6d8514c5fe25c8a" style="width: 100.0%; height: 100.0%;"><strong>Start</strong>  <br><strong>SCATS:</strong> 970<br><strong>SITE:</strong> WARRIGAL/HIGH ST RD</div>`)[0];
+                popup_bc1a05e56b07fd8e4b571b05b8a9198f.setContent(html_2891e650e3d9f8def6d8514c5fe25c8a);
             
         
 
-        marker_d67c40de898ab0dba176dc7619b1fcb3.bindPopup(popup_158c21bdfa0642fd1a0fd532e53af5bd)
+        marker_2bb4a32640a625bd64ec2d43ad57c0ae.bindPopup(popup_bc1a05e56b07fd8e4b571b05b8a9198f)
         ;
 
         
     
     
-            var marker_37d5d7cadae0edff8e22fdefe1fa4d9a = L.marker(
+            var marker_b4535ed86c87f533859030411de45dfe = L.marker(
                 [-37.79296, 145.07083],
                 {}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-            var icon_89166803bd5dee3bb695454c859ae99a = L.AwesomeMarkers.icon(
+            var icon_55164bb0941dca77d501db6d049c6fd1 = L.AwesomeMarkers.icon(
                 {"extraClasses": "fa-rotate-0", "icon": "flag", "iconColor": "white", "markerColor": "green", "prefix": "fa"}
             );
-            marker_37d5d7cadae0edff8e22fdefe1fa4d9a.setIcon(icon_89166803bd5dee3bb695454c859ae99a);
+            marker_b4535ed86c87f533859030411de45dfe.setIcon(icon_55164bb0941dca77d501db6d049c6fd1);
         
     
-        var popup_d796359628c297aab0f97771965afa88 = L.popup({"maxWidth": "100%"});
+        var popup_5dc1483e073f55b2d7ff6befe702119d = L.popup({"maxWidth": "100%"});
 
         
             
-                var html_c86f0cd2622e918dd1f3f8203ecbf484 = $(`<div id="html_c86f0cd2622e918dd1f3f8203ecbf484" style="width: 100.0%; height: 100.0%;"><strong>Finish</strong> SCATS: 4051</div>`)[0];
-                popup_d796359628c297aab0f97771965afa88.setContent(html_c86f0cd2622e918dd1f3f8203ecbf484);
+                var html_fba8f242e500cffb605c772f36d01ec3 = $(`<div id="html_fba8f242e500cffb605c772f36d01ec3" style="width: 100.0%; height: 100.0%;"><strong>Finish</strong> <br><strong>SCATS:</strong> 4051<br><strong>SITE:</strong> WARRIGAL/HIGH ST RD</div>`)[0];
+                popup_5dc1483e073f55b2d7ff6befe702119d.setContent(html_fba8f242e500cffb605c772f36d01ec3);
             
         
 
-        marker_37d5d7cadae0edff8e22fdefe1fa4d9a.bindPopup(popup_d796359628c297aab0f97771965afa88)
+        marker_b4535ed86c87f533859030411de45dfe.bindPopup(popup_5dc1483e073f55b2d7ff6befe702119d)
         ;
 
         
     
     
-            var circle_496905cdd9de2494a2ddc9c626aaf35c = L.circle(
+            var circle_0e22093ece694a46722212e5c82ac192 = L.circle(
                 [-37.8658, 145.09282],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_e8af680fcd3597c572110d8f465d9fff = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_8bee906281b8e144f508c029ff4bbd25 = $(`<div id="html_8bee906281b8e144f508c029ff4bbd25" style="width: 100.0%; height: 100.0%;">SCATS: 970</div>`)[0];
-                popup_e8af680fcd3597c572110d8f465d9fff.setContent(html_8bee906281b8e144f508c029ff4bbd25);
-            
-        
-
-        circle_496905cdd9de2494a2ddc9c626aaf35c.bindPopup(popup_e8af680fcd3597c572110d8f465d9fff)
-        ;
-
+            circle_0e22093ece694a46722212e5c82ac192.bindTooltip(
+                `<div>
+                     SCATS: 970, SITE: WARRIGAL/HIGH ST RD
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_4f8282f28fab677f595a3be914174760 = L.circle(
+            var circle_deacb8575d89c469519065dd33cb39c6 = L.circle(
                 [-37.8504527, 145.09557569999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_d9c189d631385068d9700a5419221fbd = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_76b5ef4a13fef8da8739847cd90e9da3 = $(`<div id="html_76b5ef4a13fef8da8739847cd90e9da3" style="width: 100.0%; height: 100.0%;">SCATS: 2000</div>`)[0];
-                popup_d9c189d631385068d9700a5419221fbd.setContent(html_76b5ef4a13fef8da8739847cd90e9da3);
-            
-        
-
-        circle_4f8282f28fab677f595a3be914174760.bindPopup(popup_d9c189d631385068d9700a5419221fbd)
-        ;
-
+            circle_deacb8575d89c469519065dd33cb39c6.bindTooltip(
+                `<div>
+                     SCATS: 2000, SITE: BURWOOD HWY/WARRIGAL/TOORAK
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_fdbd6be506c3a7984b397668d68e3fa9 = L.circle(
+            var circle_66a77461034b1d9b6f0a2bb284d4ad51 = L.circle(
                 [-37.81508, 145.09935],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_b6f457316ad5990eb24144cc6b0e4b69 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_2983d5f104180624a2e313fea8a9443d = $(`<div id="html_2983d5f104180624a2e313fea8a9443d" style="width: 100.0%; height: 100.0%;">SCATS: 2200</div>`)[0];
-                popup_b6f457316ad5990eb24144cc6b0e4b69.setContent(html_2983d5f104180624a2e313fea8a9443d);
-            
-        
-
-        circle_fdbd6be506c3a7984b397668d68e3fa9.bindPopup(popup_b6f457316ad5990eb24144cc6b0e4b69)
-        ;
-
+            circle_66a77461034b1d9b6f0a2bb284d4ad51.bindTooltip(
+                `<div>
+                     SCATS: 2200, SITE: MAROONDAH/UNION
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_ac161260494c4f75249a34b853365266 = L.circle(
+            var circle_db7c690ee2374fcfe3fdebba350cb242 = L.circle(
                 [-37.79354, 145.03199999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_466b76200561088c0ad8c1c2ad833e8d = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_08fd699075184aae17298d6e10e6652a = $(`<div id="html_08fd699075184aae17298d6e10e6652a" style="width: 100.0%; height: 100.0%;">SCATS: 2820</div>`)[0];
-                popup_466b76200561088c0ad8c1c2ad833e8d.setContent(html_08fd699075184aae17298d6e10e6652a);
-            
-        
-
-        circle_ac161260494c4f75249a34b853365266.bindPopup(popup_466b76200561088c0ad8c1c2ad833e8d)
-        ;
-
+            circle_db7c690ee2374fcfe3fdebba350cb242.bindTooltip(
+                `<div>
+                     SCATS: 2820, SITE: CHANDLER HWY/PRINCESS/VALERIE/EASTERN
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_ddccbde411c3f395932b27e9821fb3d7 = L.circle(
+            var circle_0f8340b4a89e69f63747594b43b85161 = L.circle(
                 [-37.78538, 145.06324999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_2fbe68292c7750032b1a2b1b852558b4 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_887a06487a7278c1fc0c90c450f44d3c = $(`<div id="html_887a06487a7278c1fc0c90c450f44d3c" style="width: 100.0%; height: 100.0%;">SCATS: 2825</div>`)[0];
-                popup_2fbe68292c7750032b1a2b1b852558b4.setContent(html_887a06487a7278c1fc0c90c450f44d3c);
-            
-        
-
-        circle_ddccbde411c3f395932b27e9821fb3d7.bindPopup(popup_2fbe68292c7750032b1a2b1b852558b4)
-        ;
-
+            circle_0f8340b4a89e69f63747594b43b85161.bindTooltip(
+                `<div>
+                     SCATS: 2825, SITE: EASTERN/BURKE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_aeb59e7db83a1bb2483c2aa7748d0fd8 = L.circle(
+            var circle_e5d20f660f9f2fb0ac66ef57befdc7f0 = L.circle(
                 [-37.7797, 145.07855999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_4dbd0226b3ce82f54bae4cda8d941a43 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_df27a514f5dc396caf9aeb3ac127cafc = $(`<div id="html_df27a514f5dc396caf9aeb3ac127cafc" style="width: 100.0%; height: 100.0%;">SCATS: 2827</div>`)[0];
-                popup_4dbd0226b3ce82f54bae4cda8d941a43.setContent(html_df27a514f5dc396caf9aeb3ac127cafc);
-            
-        
-
-        circle_aeb59e7db83a1bb2483c2aa7748d0fd8.bindPopup(popup_4dbd0226b3ce82f54bae4cda8d941a43)
-        ;
-
+            circle_e5d20f660f9f2fb0ac66ef57befdc7f0.bindTooltip(
+                `<div>
+                     SCATS: 2827, SITE: EASTERN/BULLEEN/THOMPSONS
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_4e5ff56fca6d84280c512bd7888217c1 = L.circle(
+            var circle_b4dfba1a21248df45c1e2189f5de2161 = L.circle(
                 [-37.8600371, 145.059268],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_f072be1970568f3329adccf27fd5fb6b = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_c83b1bd7e9bd7d3ad4de8affe8ea4814 = $(`<div id="html_c83b1bd7e9bd7d3ad4de8affe8ea4814" style="width: 100.0%; height: 100.0%;">SCATS: 2846</div>`)[0];
-                popup_f072be1970568f3329adccf27fd5fb6b.setContent(html_c83b1bd7e9bd7d3ad4de8affe8ea4814);
-            
-        
-
-        circle_4e5ff56fca6d84280c512bd7888217c1.bindPopup(popup_f072be1970568f3329adccf27fd5fb6b)
-        ;
-
+            circle_b4dfba1a21248df45c1e2189f5de2161.bindTooltip(
+                `<div>
+                     SCATS: 2846, SITE: MONASH/HIGH ST RD
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_1e5c7935c404b5b4b9a1f940c81107e3 = L.circle(
+            var circle_0ae09d7cc720451875a1f95c36b19378 = L.circle(
                 [-37.81318, 145.02366],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_3ee55e2ba94b0e15dcdd5aa4c7e59a91 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_9e4845403bec0abf6bbc206859f62eec = $(`<div id="html_9e4845403bec0abf6bbc206859f62eec" style="width: 100.0%; height: 100.0%;">SCATS: 3001</div>`)[0];
-                popup_3ee55e2ba94b0e15dcdd5aa4c7e59a91.setContent(html_9e4845403bec0abf6bbc206859f62eec);
-            
-        
-
-        circle_1e5c7935c404b5b4b9a1f940c81107e3.bindPopup(popup_3ee55e2ba94b0e15dcdd5aa4c7e59a91)
-        ;
-
+            circle_0ae09d7cc720451875a1f95c36b19378.bindTooltip(
+                `<div>
+                     SCATS: 3001, SITE: BARKERS/CHURCH/HIGH
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_d210dee348b46e96df067f4e93a11d95 = L.circle(
+            var circle_c92603d262cbcc2e57cf04fb6a40d5e7 = L.circle(
                 [-37.81366, 145.02786],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_7c516713557223877b72db7d541bf447 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_b866999b9c7071eda66b2c5909fd0f08 = $(`<div id="html_b866999b9c7071eda66b2c5909fd0f08" style="width: 100.0%; height: 100.0%;">SCATS: 3002</div>`)[0];
-                popup_7c516713557223877b72db7d541bf447.setContent(html_b866999b9c7071eda66b2c5909fd0f08);
-            
-        
-
-        circle_d210dee348b46e96df067f4e93a11d95.bindPopup(popup_7c516713557223877b72db7d541bf447)
-        ;
-
+            circle_c92603d262cbcc2e57cf04fb6a40d5e7.bindTooltip(
+                `<div>
+                     SCATS: 3002, SITE: BARKERS/DENMARK/POWER
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_71795ced751c58c7cd2b0791ae21ae0a = L.circle(
+            var circle_8b41a1ff39cd979f472896f16d42a2eb = L.circle(
                 [-37.82141, 145.05857],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_0a6cd2359b7783f5f834f6730ff8a353 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_33db905476ba15717a168560c36ff0e7 = $(`<div id="html_33db905476ba15717a168560c36ff0e7" style="width: 100.0%; height: 100.0%;">SCATS: 3120</div>`)[0];
-                popup_0a6cd2359b7783f5f834f6730ff8a353.setContent(html_33db905476ba15717a168560c36ff0e7);
-            
-        
-
-        circle_71795ced751c58c7cd2b0791ae21ae0a.bindPopup(popup_0a6cd2359b7783f5f834f6730ff8a353)
-        ;
-
+            circle_8b41a1ff39cd979f472896f16d42a2eb.bindTooltip(
+                `<div>
+                     SCATS: 3120, SITE: BURKE/CANTERBURY
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_9c121e7a238bbb4853b0e54686a73012 = L.circle(
+            var circle_9d9f759475ed9ccfa7a4097040f67f30 = L.circle(
                 [-37.82256, 145.06589],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_2c3566fcee0ccd2cebfed4ac5df881d0 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_6fac3ac6ab98437e37bcfa247e349a40 = $(`<div id="html_6fac3ac6ab98437e37bcfa247e349a40" style="width: 100.0%; height: 100.0%;">SCATS: 3122</div>`)[0];
-                popup_2c3566fcee0ccd2cebfed4ac5df881d0.setContent(html_6fac3ac6ab98437e37bcfa247e349a40);
-            
-        
-
-        circle_9c121e7a238bbb4853b0e54686a73012.bindPopup(popup_2c3566fcee0ccd2cebfed4ac5df881d0)
-        ;
-
+            circle_9d9f759475ed9ccfa7a4097040f67f30.bindTooltip(
+                `<div>
+                     SCATS: 3122, SITE: CANTERBURY/STANHOPE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_291e6947594118386a2b48ad3fb903fd = L.circle(
+            var circle_b88355f3071423780323276cf16801db = L.circle(
                 [-37.82655, 145.10008],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_3a4ef3d449f54dfefc62cebcb227fd53 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_3fd823b148828034ac9fa528f38c79f3 = $(`<div id="html_3fd823b148828034ac9fa528f38c79f3" style="width: 100.0%; height: 100.0%;">SCATS: 3126</div>`)[0];
-                popup_3a4ef3d449f54dfefc62cebcb227fd53.setContent(html_3fd823b148828034ac9fa528f38c79f3);
-            
-        
-
-        circle_291e6947594118386a2b48ad3fb903fd.bindPopup(popup_3a4ef3d449f54dfefc62cebcb227fd53)
-        ;
-
+            circle_b88355f3071423780323276cf16801db.bindTooltip(
+                `<div>
+                     SCATS: 3126, SITE: CANTERBURY/WARRIGAL/UNION
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_442a2a9e275e98c66ec95e7a1dfea077 = L.circle(
+            var circle_b4d9d5fdb0286e940bc07bec7e225cd8 = L.circle(
                 [-37.82383, 145.07923],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_59b3a8f7dcbc3b246aa97715e02220f8 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_df3ddb885606f23fb24c9487f31eee06 = $(`<div id="html_df3ddb885606f23fb24c9487f31eee06" style="width: 100.0%; height: 100.0%;">SCATS: 3127</div>`)[0];
-                popup_59b3a8f7dcbc3b246aa97715e02220f8.setContent(html_df3ddb885606f23fb24c9487f31eee06);
-            
-        
-
-        circle_442a2a9e275e98c66ec95e7a1dfea077.bindPopup(popup_59b3a8f7dcbc3b246aa97715e02220f8)
-        ;
-
+            circle_b4d9d5fdb0286e940bc07bec7e225cd8.bindTooltip(
+                `<div>
+                     SCATS: 3127, SITE: CANTERBURY/BALWYN
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_65aa2590416fdb8fd77feafd4389b9c2 = L.circle(
+            var circle_01b021c1743588118cd164fe7a991776 = L.circle(
                 [-37.79488, 145.08495],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_1b7bceb2e01657801df2f3d3cec1c9eb = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_6b9dfa8e6a93977fb0a21da5ddd5756a = $(`<div id="html_6b9dfa8e6a93977fb0a21da5ddd5756a" style="width: 100.0%; height: 100.0%;">SCATS: 3180</div>`)[0];
-                popup_1b7bceb2e01657801df2f3d3cec1c9eb.setContent(html_6b9dfa8e6a93977fb0a21da5ddd5756a);
-            
-        
-
-        circle_65aa2590416fdb8fd77feafd4389b9c2.bindPopup(popup_1b7bceb2e01657801df2f3d3cec1c9eb)
-        ;
-
+            circle_01b021c1743588118cd164fe7a991776.bindTooltip(
+                `<div>
+                     SCATS: 3180, SITE: DONCASTER/BALWYN
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_e16b22b654de33ac06aa6eff10edd432 = L.circle(
+            var circle_611ed5592d12c96b81a776bc4aa686f0 = L.circle(
                 [-37.80753, 145.0288],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_e1aaa9bf88bacb215c937e5371f9d0b5 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_975bdb0604b973b67351ba304114e32e = $(`<div id="html_975bdb0604b973b67351ba304114e32e" style="width: 100.0%; height: 100.0%;">SCATS: 3662</div>`)[0];
-                popup_e1aaa9bf88bacb215c937e5371f9d0b5.setContent(html_975bdb0604b973b67351ba304114e32e);
-            
-        
-
-        circle_e16b22b654de33ac06aa6eff10edd432.bindPopup(popup_e1aaa9bf88bacb215c937e5371f9d0b5)
-        ;
-
+            circle_611ed5592d12c96b81a776bc4aa686f0.bindTooltip(
+                `<div>
+                     SCATS: 3662, SITE: HIGH/DENMARK/PRINCESS/S'PARK/COTHAM
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_4ba8bbc9af2569bd478e57336e5f2649 = L.circle(
+            var circle_2e63c4bb0c901ac49b16bc1d9af1f3bb = L.circle(
                 [-37.83572, 145.09822],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_d54263cbae53faf79636adabbb8f11cd = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_dfef8c94f0ac5264bc2c7ce51dd2e1fd = $(`<div id="html_dfef8c94f0ac5264bc2c7ce51dd2e1fd" style="width: 100.0%; height: 100.0%;">SCATS: 3682</div>`)[0];
-                popup_d54263cbae53faf79636adabbb8f11cd.setContent(html_dfef8c94f0ac5264bc2c7ce51dd2e1fd);
-            
-        
-
-        circle_4ba8bbc9af2569bd478e57336e5f2649.bindPopup(popup_d54263cbae53faf79636adabbb8f11cd)
-        ;
-
+            circle_2e63c4bb0c901ac49b16bc1d9af1f3bb.bindTooltip(
+                `<div>
+                     SCATS: 3682, SITE: WARRIGAL/RIVERSDALE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_8ac46371aa83dac7e111a7a9fb40e81a = L.circle(
+            var circle_59b8a8b99ca60a058bc939f674983f00 = L.circle(
                 [-37.85344, 145.09507],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_bcd87803da510ce8502fa3e5c9243112 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_299c86892e1a8846c5b416ad0cbaac27 = $(`<div id="html_299c86892e1a8846c5b416ad0cbaac27" style="width: 100.0%; height: 100.0%;">SCATS: 3685</div>`)[0];
-                popup_bcd87803da510ce8502fa3e5c9243112.setContent(html_299c86892e1a8846c5b416ad0cbaac27);
-            
-        
-
-        circle_8ac46371aa83dac7e111a7a9fb40e81a.bindPopup(popup_bcd87803da510ce8502fa3e5c9243112)
-        ;
-
+            circle_59b8a8b99ca60a058bc939f674983f00.bindTooltip(
+                `<div>
+                     SCATS: 3685, SITE: WARRIGAL/HIGHBURY
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_290c97989a466afbf425ea101b5fba93 = L.circle(
+            var circle_59dafd67a465a9a3086caf42149cee1f = L.circle(
                 [-37.83208, 145.06369999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_097c3741ad45c5214b6e7faef98bf0f6 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_bd78578f57a8a74166e2f595db63a099 = $(`<div id="html_bd78578f57a8a74166e2f595db63a099" style="width: 100.0%; height: 100.0%;">SCATS: 3804</div>`)[0];
-                popup_097c3741ad45c5214b6e7faef98bf0f6.setContent(html_bd78578f57a8a74166e2f595db63a099);
-            
-        
-
-        circle_290c97989a466afbf425ea101b5fba93.bindPopup(popup_097c3741ad45c5214b6e7faef98bf0f6)
-        ;
-
+            circle_59dafd67a465a9a3086caf42149cee1f.bindTooltip(
+                `<div>
+                     SCATS: 3804, SITE: RIVERSDALE/TRAFALGAR/STANHOPE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_f042ebd095b2bcad2e9dd4dd9fe54fb4 = L.circle(
+            var circle_362fe79e75f394cc32be7921f7d89389 = L.circle(
                 [-37.83615, 145.06242],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_2b72d8fb3fd02b8fa1b294857fc5248b = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_627a24026f2bd9ddf7f7a61177ae79c7 = $(`<div id="html_627a24026f2bd9ddf7f7a61177ae79c7" style="width: 100.0%; height: 100.0%;">SCATS: 3812</div>`)[0];
-                popup_2b72d8fb3fd02b8fa1b294857fc5248b.setContent(html_627a24026f2bd9ddf7f7a61177ae79c7);
-            
-        
-
-        circle_f042ebd095b2bcad2e9dd4dd9fe54fb4.bindPopup(popup_2b72d8fb3fd02b8fa1b294857fc5248b)
-        ;
-
+            circle_362fe79e75f394cc32be7921f7d89389.bindTooltip(
+                `<div>
+                     SCATS: 3812, SITE: CAMBERWELL/SEYMOUR/TRAFALGAR
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_4198e43bfe8f4978413d26758f46aeb7 = L.circle(
+            var circle_f4f7e8d3e0e4b6c0f3d815b8a70a530f = L.circle(
                 [-37.794380000000004, 145.06374],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_681ff5f31075c3f92ea9066ea2023760 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_103c1597cca68f2c6e0b6b9cb7d3a331 = $(`<div id="html_103c1597cca68f2c6e0b6b9cb7d3a331" style="width: 100.0%; height: 100.0%;">SCATS: 4030</div>`)[0];
-                popup_681ff5f31075c3f92ea9066ea2023760.setContent(html_103c1597cca68f2c6e0b6b9cb7d3a331);
-            
-        
-
-        circle_4198e43bfe8f4978413d26758f46aeb7.bindPopup(popup_681ff5f31075c3f92ea9066ea2023760)
-        ;
-
+            circle_f4f7e8d3e0e4b6c0f3d815b8a70a530f.bindTooltip(
+                `<div>
+                     SCATS: 4030, SITE: BURKE/DONCASTER/KILBY/HIGH
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_321d2626cee449f0437e441d8918ecff = L.circle(
+            var circle_5fc2f85e9d26a6a9d3bea52d72f36a37 = L.circle(
                 [-37.80079, 145.0625],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_a71b1fdce05e226276a33207297c97a8 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_f82394022d135e4c840918a161160bd9 = $(`<div id="html_f82394022d135e4c840918a161160bd9" style="width: 100.0%; height: 100.0%;">SCATS: 4032</div>`)[0];
-                popup_a71b1fdce05e226276a33207297c97a8.setContent(html_f82394022d135e4c840918a161160bd9);
-            
-        
-
-        circle_321d2626cee449f0437e441d8918ecff.bindPopup(popup_a71b1fdce05e226276a33207297c97a8)
-        ;
-
+            circle_5fc2f85e9d26a6a9d3bea52d72f36a37.bindTooltip(
+                `<div>
+                     SCATS: 4032, SITE: BURKE/BELMORE/HARP
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_d71438f5f109aaa5077eeacaba53bffe = L.circle(
+            var circle_e7836b021805a40b6f95f7b533cfa6cb = L.circle(
                 [-37.81024, 145.06069],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_985c9ce9e6b37c1bed575540b6914d52 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_dd30d173f3056837eef0b12270d4e486 = $(`<div id="html_dd30d173f3056837eef0b12270d4e486" style="width: 100.0%; height: 100.0%;">SCATS: 4034</div>`)[0];
-                popup_985c9ce9e6b37c1bed575540b6914d52.setContent(html_dd30d173f3056837eef0b12270d4e486);
-            
-        
-
-        circle_d71438f5f109aaa5077eeacaba53bffe.bindPopup(popup_985c9ce9e6b37c1bed575540b6914d52)
-        ;
-
+            circle_e7836b021805a40b6f95f7b533cfa6cb.bindTooltip(
+                `<div>
+                     SCATS: 4034, SITE: BURKE/COTHAM/WHITEHORSE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_6749aff21bbecca4acc53260b072bcac = L.circle(
+            var circle_ac947e76e8131ccd4d5c49f96a1965df = L.circle(
                 [-37.8160354, 145.0595903],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_23377ab3b7fcad5c74c8e58568f35ab6 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_64cd0e2435e49b89d820b36f83971ae1 = $(`<div id="html_64cd0e2435e49b89d820b36f83971ae1" style="width: 100.0%; height: 100.0%;">SCATS: 4035</div>`)[0];
-                popup_23377ab3b7fcad5c74c8e58568f35ab6.setContent(html_64cd0e2435e49b89d820b36f83971ae1);
-            
-        
-
-        circle_6749aff21bbecca4acc53260b072bcac.bindPopup(popup_23377ab3b7fcad5c74c8e58568f35ab6)
-        ;
-
+            circle_ac947e76e8131ccd4d5c49f96a1965df.bindTooltip(
+                `<div>
+                     SCATS: 4035, SITE: BURKE/BARKERS/MONT ALBERT
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_88d1c48c03e5759bcd19ff0641c241c5 = L.circle(
+            var circle_752ec59a9961a0a314d7bc7158d21c79 = L.circle(
                 [-37.83133, 145.05668],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_5b406b670cb02276925ecebeff87f85b = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_fcb295a8a1fce7e28af0b4926e7d3b64 = $(`<div id="html_fcb295a8a1fce7e28af0b4926e7d3b64" style="width: 100.0%; height: 100.0%;">SCATS: 4040</div>`)[0];
-                popup_5b406b670cb02276925ecebeff87f85b.setContent(html_fcb295a8a1fce7e28af0b4926e7d3b64);
-            
-        
-
-        circle_88d1c48c03e5759bcd19ff0641c241c5.bindPopup(popup_5b406b670cb02276925ecebeff87f85b)
-        ;
-
+            circle_752ec59a9961a0a314d7bc7158d21c79.bindTooltip(
+                `<div>
+                     SCATS: 4040, SITE: BURKE/CAMBERWELL/RIVERSDALE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_60d4b5b8dc23bf8b5447d020bd3017d7 = L.circle(
+            var circle_fccd61b92609c79882f8c9b32903c7cf = L.circle(
                 [-37.8456, 145.05398],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_97a57a62f30ca05fb1f21f5d8f5187d7 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_165a0e7da49ce1b1b9bd24cdad1f8523 = $(`<div id="html_165a0e7da49ce1b1b9bd24cdad1f8523" style="width: 100.0%; height: 100.0%;">SCATS: 4043</div>`)[0];
-                popup_97a57a62f30ca05fb1f21f5d8f5187d7.setContent(html_165a0e7da49ce1b1b9bd24cdad1f8523);
-            
-        
-
-        circle_60d4b5b8dc23bf8b5447d020bd3017d7.bindPopup(popup_97a57a62f30ca05fb1f21f5d8f5187d7)
-        ;
-
+            circle_fccd61b92609c79882f8c9b32903c7cf.bindTooltip(
+                `<div>
+                     SCATS: 4043, SITE: BURKE/TOORAK
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_474f7ffa97088651411e226f46b4d8ce = L.circle(
+            var circle_ecc6258386d35e8a4ecccdb531ea6caa = L.circle(
                 [-37.79296, 145.07083],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_10c15567809139d420552efee91bb295 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_3ed9640dab940015b8f937a531364183 = $(`<div id="html_3ed9640dab940015b8f937a531364183" style="width: 100.0%; height: 100.0%;">SCATS: 4051</div>`)[0];
-                popup_10c15567809139d420552efee91bb295.setContent(html_3ed9640dab940015b8f937a531364183);
-            
-        
-
-        circle_474f7ffa97088651411e226f46b4d8ce.bindPopup(popup_10c15567809139d420552efee91bb295)
-        ;
-
+            circle_ecc6258386d35e8a4ecccdb531ea6caa.bindTooltip(
+                `<div>
+                     SCATS: 4051, SITE: DONCASTER/BULLEEN/SEVERN
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_b885031fdc03a667fc020a380d99998e = L.circle(
+            var circle_5200abb102941f917b5dbee47d2e6715 = L.circle(
                 [-37.80308, 145.0832],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_599c11bc5add17c52775121ba0d75950 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_806b89bec3876a8e052f5c805521188b = $(`<div id="html_806b89bec3876a8e052f5c805521188b" style="width: 100.0%; height: 100.0%;">SCATS: 4057</div>`)[0];
-                popup_599c11bc5add17c52775121ba0d75950.setContent(html_806b89bec3876a8e052f5c805521188b);
-            
-        
-
-        circle_b885031fdc03a667fc020a380d99998e.bindPopup(popup_599c11bc5add17c52775121ba0d75950)
-        ;
-
+            circle_5200abb102941f917b5dbee47d2e6715.bindTooltip(
+                `<div>
+                     SCATS: 4057, SITE: BALWYN/BELMORE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_ef197b52a7cefaea6b6b8c4b251222df = L.circle(
+            var circle_c65c62005cee92650cb108b7da736115 = L.circle(
                 [-37.81281, 145.08132999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_a540f8f098a7539cbe5b8d136ac7da0b = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_8655976fcc3e726603df13ac79bf7b24 = $(`<div id="html_8655976fcc3e726603df13ac79bf7b24" style="width: 100.0%; height: 100.0%;">SCATS: 4063</div>`)[0];
-                popup_a540f8f098a7539cbe5b8d136ac7da0b.setContent(html_8655976fcc3e726603df13ac79bf7b24);
-            
-        
-
-        circle_ef197b52a7cefaea6b6b8c4b251222df.bindPopup(popup_a540f8f098a7539cbe5b8d136ac7da0b)
-        ;
-
+            circle_c65c62005cee92650cb108b7da736115.bindTooltip(
+                `<div>
+                     SCATS: 4063, SITE: WHITEHORSE/BALWYN/MAROONDAH
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_071fb4677f221cb5a101f08a9d904fbf = L.circle(
+            var circle_c9c62f4238ac8e30787ac41ebca386d4 = L.circle(
                 [-37.82032, 145.01626],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_7b9063da1c53025c81eb18cddbab30ad = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_d8ead4d45cfd38af3d5a35d836397214 = $(`<div id="html_d8ead4d45cfd38af3d5a35d836397214" style="width: 100.0%; height: 100.0%;">SCATS: 4262</div>`)[0];
-                popup_7b9063da1c53025c81eb18cddbab30ad.setContent(html_d8ead4d45cfd38af3d5a35d836397214);
-            
-        
-
-        circle_071fb4677f221cb5a101f08a9d904fbf.bindPopup(popup_7b9063da1c53025c81eb18cddbab30ad)
-        ;
-
+            circle_c9c62f4238ac8e30787ac41ebca386d4.bindTooltip(
+                `<div>
+                     SCATS: 4262, SITE: BURWOOD/CHURCH
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_a6d062f455c5bd5d54388fcbeb55bea6 = L.circle(
+            var circle_d11f5f89ca7f1942a1f85950d8752128 = L.circle(
                 [-37.8216162, 145.0263592],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_b66336c66c811d2f9c44454cb48576a8 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_aaf2db571f066c5b792e062834b67084 = $(`<div id="html_aaf2db571f066c5b792e062834b67084" style="width: 100.0%; height: 100.0%;">SCATS: 4263</div>`)[0];
-                popup_b66336c66c811d2f9c44454cb48576a8.setContent(html_aaf2db571f066c5b792e062834b67084);
-            
-        
-
-        circle_a6d062f455c5bd5d54388fcbeb55bea6.bindPopup(popup_b66336c66c811d2f9c44454cb48576a8)
-        ;
-
+            circle_d11f5f89ca7f1942a1f85950d8752128.bindTooltip(
+                `<div>
+                     SCATS: 4263, SITE: BURWOOD/POWER
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_6383892b87dcee3fd63af530e5bdc9d8 = L.circle(
+            var circle_f85557bb52e8edfa8c8031577a344ecc = L.circle(
                 [-37.82266, 145.03531999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_972ab18b8aaf987d321bb9768d1caee0 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_5491d7b8ecc70c3b5e8e3c515bc5a743 = $(`<div id="html_5491d7b8ecc70c3b5e8e3c515bc5a743" style="width: 100.0%; height: 100.0%;">SCATS: 4264</div>`)[0];
-                popup_972ab18b8aaf987d321bb9768d1caee0.setContent(html_5491d7b8ecc70c3b5e8e3c515bc5a743);
-            
-        
-
-        circle_6383892b87dcee3fd63af530e5bdc9d8.bindPopup(popup_972ab18b8aaf987d321bb9768d1caee0)
-        ;
-
+            circle_f85557bb52e8edfa8c8031577a344ecc.bindTooltip(
+                `<div>
+                     SCATS: 4264, SITE: BURWOOD/GLENFERRIE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_aeee5c8ce1ffe26864e5fd24de2b5b50 = L.circle(
+            var circle_c07b1a877745737d6c3cb39be7dcd8e7 = L.circle(
                 [-37.82406667, 145.0446767],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_6bb77dff3623ceab00f2568a8943e9d6 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_4b0bd02a5b2528dbb34a7c89fbc166a0 = $(`<div id="html_4b0bd02a5b2528dbb34a7c89fbc166a0" style="width: 100.0%; height: 100.0%;">SCATS: 4266</div>`)[0];
-                popup_6bb77dff3623ceab00f2568a8943e9d6.setContent(html_4b0bd02a5b2528dbb34a7c89fbc166a0);
-            
-        
-
-        circle_aeee5c8ce1ffe26864e5fd24de2b5b50.bindPopup(popup_6bb77dff3623ceab00f2568a8943e9d6)
-        ;
-
+            circle_c07b1a877745737d6c3cb39be7dcd8e7.bindTooltip(
+                `<div>
+                     SCATS: 4266, SITE: BURWOOD/AUBURN/CAMBERWELL
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_d1d76eb11f94d5a81ce5defa8b1ba3d1 = L.circle(
+            var circle_56b224c6212adb6dfadf47ffdfd770b8 = L.circle(
                 [-37.82828, 145.03427],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_5fffedf4ec703db255fac251f0fed155 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_2fa7638509ff5ce6ac10acc791f38cd2 = $(`<div id="html_2fa7638509ff5ce6ac10acc791f38cd2" style="width: 100.0%; height: 100.0%;">SCATS: 4270</div>`)[0];
-                popup_5fffedf4ec703db255fac251f0fed155.setContent(html_2fa7638509ff5ce6ac10acc791f38cd2);
-            
-        
-
-        circle_d1d76eb11f94d5a81ce5defa8b1ba3d1.bindPopup(popup_5fffedf4ec703db255fac251f0fed155)
-        ;
-
+            circle_56b224c6212adb6dfadf47ffdfd770b8.bindTooltip(
+                `<div>
+                     SCATS: 4270, SITE: GLENFERRIE/RIVERSDALE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_e5620287b54ce759e175eb3bb1cd5f81 = L.circle(
+            var circle_40f5e59ba5d12758de1951455ff2302a = L.circle(
                 [-37.83063, 145.04791],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_8229453f21250b41bf2c2ce4261d9a90 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_41dcd20b23e4aeeaaf360f69003d0e69 = $(`<div id="html_41dcd20b23e4aeeaaf360f69003d0e69" style="width: 100.0%; height: 100.0%;">SCATS: 4272</div>`)[0];
-                popup_8229453f21250b41bf2c2ce4261d9a90.setContent(html_41dcd20b23e4aeeaaf360f69003d0e69);
-            
-        
-
-        circle_e5620287b54ce759e175eb3bb1cd5f81.bindPopup(popup_8229453f21250b41bf2c2ce4261d9a90)
-        ;
-
+            circle_40f5e59ba5d12758de1951455ff2302a.bindTooltip(
+                `<div>
+                     SCATS: 4272, SITE: RIVERSDALE/TOORONGA
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_3358ccab51a734b81a3d815a6b4c808f = L.circle(
+            var circle_7a401bd20e5182f44c02b5f198af9503 = L.circle(
                 [-37.84509, 145.04501],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_3c2c35a03b67de716aff996211f8ffa3 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_c0995d2f1ef2e9701504be72a5692b31 = $(`<div id="html_c0995d2f1ef2e9701504be72a5692b31" style="width: 100.0%; height: 100.0%;">SCATS: 4273</div>`)[0];
-                popup_3c2c35a03b67de716aff996211f8ffa3.setContent(html_c0995d2f1ef2e9701504be72a5692b31);
-            
-        
-
-        circle_3358ccab51a734b81a3d815a6b4c808f.bindPopup(popup_3c2c35a03b67de716aff996211f8ffa3)
-        ;
-
+            circle_7a401bd20e5182f44c02b5f198af9503.bindTooltip(
+                `<div>
+                     SCATS: 4273, SITE: TOORAK/TOORONGA
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_15a1c34439e1d0eb0ad0bcea7d3423d6 = L.circle(
+            var circle_bc5d63f9883bd047735481cdd7e49c90 = L.circle(
                 [-37.799546, 145.0506911],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_b81495d072c70f6f085e230b6c18674e = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_75d4ec9c2e86552318de59d678bb52f9 = $(`<div id="html_75d4ec9c2e86552318de59d678bb52f9" style="width: 100.0%; height: 100.0%;">SCATS: 4321</div>`)[0];
-                popup_b81495d072c70f6f085e230b6c18674e.setContent(html_75d4ec9c2e86552318de59d678bb52f9);
-            
-        
-
-        circle_15a1c34439e1d0eb0ad0bcea7d3423d6.bindPopup(popup_b81495d072c70f6f085e230b6c18674e)
-        ;
-
+            circle_bc5d63f9883bd047735481cdd7e49c90.bindTooltip(
+                `<div>
+                     SCATS: 4321, SITE: HIGH/HARP/VALERIE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_a003443ec3865a1c2839e43bd875389d = L.circle(
+            var circle_9ad69e042c05ce5338d0679e12998134 = L.circle(
                 [-37.808044, 145.038536],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_2a921d3573ab032defd507077c09a6a2 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_2d162da11c94314f919f973b96800563 = $(`<div id="html_2d162da11c94314f919f973b96800563" style="width: 100.0%; height: 100.0%;">SCATS: 4324</div>`)[0];
-                popup_2a921d3573ab032defd507077c09a6a2.setContent(html_2d162da11c94314f919f973b96800563);
-            
-        
-
-        circle_a003443ec3865a1c2839e43bd875389d.bindPopup(popup_2a921d3573ab032defd507077c09a6a2)
-        ;
-
+            circle_9ad69e042c05ce5338d0679e12998134.bindTooltip(
+                `<div>
+                     SCATS: 4324, SITE: COTHAM/GLENFERRIE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_b73e04564db16ddf1c7e4f26562b8aba = L.circle(
+            var circle_9a3f378167a52dc756c0af50c41f4ae8 = L.circle(
                 [-37.80501, 145.03641],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_7dbc052f4ffbca005a9f74823179bf33 = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_3257beafb777692a443d35f1ee3d4d53 = $(`<div id="html_3257beafb777692a443d35f1ee3d4d53" style="width: 100.0%; height: 100.0%;">SCATS: 4335</div>`)[0];
-                popup_7dbc052f4ffbca005a9f74823179bf33.setContent(html_3257beafb777692a443d35f1ee3d4d53);
-            
-        
-
-        circle_b73e04564db16ddf1c7e4f26562b8aba.bindPopup(popup_7dbc052f4ffbca005a9f74823179bf33)
-        ;
-
+            circle_9a3f378167a52dc756c0af50c41f4ae8.bindTooltip(
+                `<div>
+                     SCATS: 4335, SITE: HIGH/CHARLES
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_c11fb6da5c123f7402d132c2ee26b624 = L.circle(
+            var circle_d2a0a70a44dc8690fc1a5ddc959e10ea = L.circle(
                 [-37.82736, 145.01766999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_e7a8d433dba345de6fdbeb7c358b289a = L.popup({"maxWidth": "100%"});
-
-        
-            
-                var html_e81f76f1694e51b061fd2dbf35cb75c8 = $(`<div id="html_e81f76f1694e51b061fd2dbf35cb75c8" style="width: 100.0%; height: 100.0%;">SCATS: 4812</div>`)[0];
-                popup_e7a8d433dba345de6fdbeb7c358b289a.setContent(html_e81f76f1694e51b061fd2dbf35cb75c8);
-            
-        
-
-        circle_c11fb6da5c123f7402d132c2ee26b624.bindPopup(popup_e7a8d433dba345de6fdbeb7c358b289a)
-        ;
-
+            circle_d2a0a70a44dc8690fc1a5ddc959e10ea.bindTooltip(
+                `<div>
+                     SCATS: 4812, SITE: SWAN/MADDEN/RIVERSDALE
+                 </div>`,
+                {"sticky": true}
+            );
         
     
-    
-            var circle_bbad1545c6354892663ee40f31cb6d1d = L.circle(
+            var circle_7386561c784f43de857485b3f7bfab49 = L.circle(
                 [-37.8117, 145.00987999999998],
-                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#5A5A5A", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
-            ).addTo(map_330790b3715b95ec23f6d72b6cd8b7e9);
+                {"bubblingMouseEvents": true, "color": "#5A5A5A", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#5A5A5A", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 5, "stroke": true, "weight": 3}
+            ).addTo(map_3348db0842bb84d7d2afb0049ff827ce);
         
     
-        var popup_15c67898cc55f3043773fc68ebc937a2 = L.popup({"maxWidth": "100%"});
-
+            circle_7386561c784f43de857485b3f7bfab49.bindTooltip(
+                `<div>
+                     SCATS: 4821, SITE: VICTORIA/BURNLEY/WALMER/BARKERS
+                 </div>`,
+                {"sticky": true}
+            );
         
-            
-                var html_11b10863b40840d28a92d1f7741b9ccd = $(`<div id="html_11b10863b40840d28a92d1f7741b9ccd" style="width: 100.0%; height: 100.0%;">SCATS: 4821</div>`)[0];
-                popup_15c67898cc55f3043773fc68ebc937a2.setContent(html_11b10863b40840d28a92d1f7741b9ccd);
-            
-        
-
-        circle_bbad1545c6354892663ee40f31cb6d1d.bindPopup(popup_15c67898cc55f3043773fc68ebc937a2)
-        ;
-
-        
-    
 </script>
 </html>
