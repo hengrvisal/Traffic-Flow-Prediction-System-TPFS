@@ -12,7 +12,7 @@ import folium
 import csv
 import json
 
-# Load neighbors data once at the start
+# Loading neighbors 
 neighbors = load_neighbors()
 TRAFFIC_NETWORK = 'neighbouring_intersections.csv'
 
@@ -33,7 +33,7 @@ class TrafficFlowGUI(tk.Tk):
         self.canvas_frame = tk.Frame(self.main_frame)
         self.canvas_frame.pack(fill="both", expand=True)
 
-        # Load background image
+        # Loading background image
         image_path = "gui_image/traffic.jpg"
         if os.path.exists(image_path):
             self.background_image = Image.open(image_path).convert("RGBA")
@@ -42,7 +42,7 @@ class TrafficFlowGUI(tk.Tk):
             self.background_image = self.background_image.resize((700, 500), Image.LANCZOS)
             self.background_image_tk = ImageTk.PhotoImage(self.background_image)
 
-            # Create a canvas for the background
+            # Creating a canvas for the background
             self.canvas = tk.Canvas(self.canvas_frame, width=700, height=480)
             self.canvas.pack(fill="both", expand=True)
             self.canvas.create_image(0, 0, image=self.background_image_tk, anchor="nw")
@@ -92,11 +92,11 @@ class TrafficFlowGUI(tk.Tk):
         self.datetime_entry.bind("<FocusOut>", self.add_placeholder)
         self.datetime_entry.grid(row=4, column=1, padx=10, pady=5, sticky='ew')
 
-        # Configure column weights for better resizing behavior
+        # Configuration of column weights for better resizing behavior
         self.input_frame.columnconfigure(0, weight=1)
         self.input_frame.columnconfigure(1, weight=3)
 
-        # Generate Route Button
+        # Generating Route Button
         generate_button = tk.Button(self.input_frame, text="Generate Route", command=self.generate_route, font=("Helvetica", 10), bg="#4CAF50", fg="white", bd=0)
         generate_button.grid(row=5, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
 
@@ -109,7 +109,7 @@ class TrafficFlowGUI(tk.Tk):
         self.view_route_button = tk.Button(self, text="View Route", command=self.view_route, font=("Helvetica", 10), bg="#4CAF50", fg="white", bd=0)
         self.canvas.create_window(350, 430, window=self.view_route_button)
 
-        # Create a frame for the status bar and add it at the bottom of the main_frame
+        # Creating frame for the status bar and placing it at the bottom of the main_frame
         self.status_frame = tk.Frame(self.main_frame)
         self.status_frame.pack(side=tk.BOTTOM, fill=tk.X)
 
@@ -150,6 +150,13 @@ class TrafficFlowGUI(tk.Tk):
             messagebox.showerror("Input Error", "Please fill in the Origin and Destination Nodes.")
             self.status_bar.config(text="Error: Missing input fields.")
             return
+        # Validate SCATS coordinates
+        src_coords = self.getCoords(src)
+        dest_coords = self.getCoords(dest)
+        if not src_coords or not dest_coords:
+            messagebox.showerror("Input Error", f"One or both of the SCATS numbers are invalid: {src}, {dest}")
+            self.status_bar.config(text="Error: Invalid SCATS input.")
+            return
 
         date_time = self.get_date_time()
         if date_time is None:
@@ -172,6 +179,7 @@ class TrafficFlowGUI(tk.Tk):
         except Exception as e:
             result = f"Error generating route: {str(e)}"
             self.status_bar.config(text="Error generating route.")
+            print("Exception in generate_route:", e)
 
         self.display_result(result)
 
@@ -181,35 +189,36 @@ class TrafficFlowGUI(tk.Tk):
         self.result_text.insert(tk.END, text)
         self.result_text.config(state='disabled')
 
-
-
-#### view route using map 
+#  Map functionalities for the View Route option 
 
     def view_route(self):
         if not self.generated_paths:
             # If no routes are generated, show SCATS locations
             self.status_bar.config(text="No route available, showing SCATS locations...")
-            self.render_map_with_scat_sites()
+            self.render_map_with_scat_sites() # the view route button leads to the map with the marked 40 scats of Boroondara region
         else:
             self.status_bar.config(text="Displaying generated route...")
             self.render_map_with_routes(self.generated_paths)
 
     def getCoords(self, scat):
-        """Fetch the coordinates of the SCATS location."""
+        """Fetching the coordinates of the SCATS location."""
+        scat = str(scat).strip()
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                if row['Scats_number'] == str(scat):
-                    # Adding a small offset to simulate more precise locations
+                if row['Scats_number'].strip() == scat:
+                    
                     lat = float(row['Latitude']) + 0.00123
                     lon = float(row['Longitude']) + 0.00123
+                    print(f"Coordinates for SCATS {scat}: ({lon}, {lat})")
                     return lon, lat  # Return longitude, latitude
 
-        print("Unable to find SCATS location")
+        print(f"Unable to find SCATS location for {scat}")
         return 0, 0
 
     def generate_geojson(self, routes):
-        """Generate GeoJSON data for routes."""
+        """Generating GeoJSON data for routes."""
+        print("Generating GeoJSON for routes:", routes)
         data = {
             "type": "FeatureCollection",
             "features": []
@@ -219,41 +228,86 @@ class TrafficFlowGUI(tk.Tk):
             weight = 5
             color = "#3484F0" if index == 0 else "#757575"  # Blue for the best route, grey for others
             coords = []
-            for scat in route:
-                lon, lat = self.getCoords(scat)
-                coords.append([lon, lat])
 
-            feature = {
-                "type": "Feature",
-                "properties": {
-                    "stroke": color,
-                    "stroke-width": weight
-                },
-                "geometry": {
-                    "type": "LineString",
-                    "coordinates": coords
+            # Route is a tuple with format (estimated_time, total_distance, path, avg_traffic)
+            path = route[2]  # Extracting the path list
+
+            for scat in path:
+                # Addition of coordinates only if the SCATS number is valid 
+                if isinstance(scat, str) and scat.isdigit():
+                    lon, lat = self.getCoords(scat)
+                    if lon != 0 and lat != 0:  # Check for calidation of coordinates 
+                        coords.append([lon, lat])
+                else:
+                    print(f"Skipping invalid SCATS: {scat}")
+
+            if coords:  # Addition of  feature only if coordinates are found
+                feature = {
+                    "type": "Feature",
+                    "properties": {
+                        "stroke": color,
+                        "stroke-width": weight
+                    },
+                    "geometry": {
+                        "type": "LineString",
+                        "coordinates": coords
+                    }
                 }
-            }
-            data["features"].append(feature)
+                data["features"].append(feature)
 
         return json.dumps(data)
-
     def draw_markers(self, map_obj, src, dest):
-        """Draw markers for the source and destination."""
-        src_lon, src_lat = self.getCoords(src)
-        dest_lon, dest_lat = self.getCoords(dest)
+        """Drawing markers for the source and destination."""
+        src_coords = self.getCoords(src)
+        dest_coords = self.getCoords(dest)
+        if src_coords and isinstance(src, str) and src.isdigit():
+            src_lon, src_lat = src_coords
+            folium.Marker([src_lat, src_lon], popup=f"<strong>Start</strong> SCATS: {src}",
+                          icon=folium.Icon(color='red', icon='circle', prefix='fa')).add_to(map_obj)
+        else:
+            print(f"Unable to plot marker for the start SCATS: {src}")
 
-        folium.Marker([src_lat, src_lon], popup=f"<strong>Start</strong> SCATS: {src}",
-                      icon=folium.Icon(color='green', icon='play', prefix='fa')).add_to(map_obj)
-        folium.Marker([dest_lat, dest_lon], popup=f"<strong>Finish</strong> SCATS: {dest}",
-                      icon=folium.Icon(color='red', icon='stop', prefix='fa')).add_to(map_obj)
+        if dest_coords and isinstance(dest, str) and dest.isdigit():
+            dest_lon, dest_lat = dest_coords
+            folium.Marker([dest_lat, dest_lon], popup=f"<strong>Finish</strong> SCATS: {dest}",
+                          icon=folium.Icon(color='green', icon='flag', prefix='fa')).add_to(map_obj)
+        else:
+            print(f"Unable to plot marker for the finish SCATS: {dest}")
+
+    def render_map_with_routes(self, routes):
+        """Render the map with the generated routes."""
+        # Extracting the path from the first route 
+        src = routes[0][2][0]  # First SCATS in the path
+        dest = routes[0][2][-1]  # Last SCATS in the path
+
+        geojson_data = self.generate_geojson(routes)
+
+        # Creating the map centered around a specific location
+        map_obj = folium.Map(location=[-37.831219, 145.056965], zoom_start=13, tiles="cartodbpositron")
+
+        # Plotting the routes
+        folium.GeoJson(geojson_data, style_function=lambda x: {
+            'color': x['properties']['stroke'],
+            'weight': x['properties']['stroke-width']
+        }).add_to(map_obj)
+
+        # Adding markers and nodes
+        self.draw_markers(map_obj, src, dest)
+        self.draw_nodes(map_obj)
+
+        # Saving map to an HTML file and open it in a web browser
+        map_obj.save("index.html")
+        webbrowser.open("index.html")
+
+
+# Scenario where in user inputs a starting and destination path for which no paths were generate but the user choose to click the View Route button then the user is lead to a map with a marked 40 nodes 
 
     def draw_nodes(self, map_obj):
-        """Draw all SCATS nodes on the map."""
+        """Drawing all SCATS nodes on the map."""
         with open(TRAFFIC_NETWORK, 'r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                lon, lat = float(row['Longitude']) + 0.001, float(row['Latitude']) + 0.001
+                lon, lat = float(row['Longitude']) + 0.00123, float(row['Latitude']) + 0.00123
                 folium.Circle(
                     radius=5,
                     location=[lat, lon],
@@ -262,32 +316,10 @@ class TrafficFlowGUI(tk.Tk):
                     fill=False
                 ).add_to(map_obj)
 
-    def render_map_with_routes(self, routes):
-        """Render the map with the generated routes."""
-        src = routes[0][0]
-        dest = routes[0][-1]
-
-        geojson_data = self.generate_geojson(routes)
-
-        # Create the map centered around a specific location
-        map_obj = folium.Map(location=[-37.831219, 145.056965], zoom_start=13, tiles="cartodbpositron")
-
-        # Plot the routes
-        folium.GeoJson(geojson_data, style_function=lambda x: {
-            'color': x['properties']['stroke'],
-            'weight': x['properties']['stroke-width']
-        }).add_to(map_obj)
-
-        # Add markers and nodes
-        self.draw_markers(map_obj, src, dest)
-        self.draw_nodes(map_obj)
-
-        # Save to an HTML file and open it in a web browser
-        map_obj.save("index.html")
-        webbrowser.open("index.html")
+    
 
     def render_map_with_scat_sites(self):
-        """Render the map with only the SCATS locations."""
+        """Rendering the map with only the SCATS locations."""
         # Create the map centered around a specific location
         map_obj = folium.Map(location=[-37.831219, 145.056965], zoom_start=13, tiles="cartodbpositron")
 
