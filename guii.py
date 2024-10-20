@@ -232,7 +232,7 @@ class TrafficFlowGUI(tk.Tk):
 
         for index, route in reversed(list(enumerate(routes))):
             weight = 5
-            color = "#3484F0" if index == 0 else "#757575"  # Blue for the best route, grey for others
+            color = "#3484F0" if index == 0 else "#757575"  #
             coords = []
 
             # Route is a tuple with format (estimated_time, total_distance, path, avg_traffic)
@@ -243,7 +243,7 @@ class TrafficFlowGUI(tk.Tk):
                 if isinstance(scat, str) and scat.isdigit():
                     coord_data = self.getCoords(scat)
                     if coord_data:
-                        lon, lat, _ = coord_data  # Unpack the longitude, latitude, and description
+                        lon, lat, _ = coord_data  
                         if lon != 0 and lat != 0:  # Check if coordinates are valid
                             coords.append([lon, lat])
                     else:
@@ -335,20 +335,19 @@ class TrafficFlowGUI(tk.Tk):
 
     def render_map_with_scat_sites(self):
         """Rendering the map with only the SCATS locations."""
-        # Create the map centered around a specific location
+        # Creating the map centered around a specific location
         map_obj = folium.Map(location=[-37.831219, 145.056965], zoom_start=13, tiles="cartodbpositron")
 
-        # Draw SCATS nodes
         self.draw_nodes(map_obj)
 
-        # Add a message about no route found
+        # Adding a message about no route found
         folium.Marker(
             location=[-37.831219, 145.056965],
             popup="<strong>No route found</strong>",
             icon=folium.Icon(color='red')
         ).add_to(map_obj)
 
-        # Save to an HTML file and open it in a web browser
+        # Saved to an HTML file and open it in a web browser
         map_obj.save("index.html")
         webbrowser.open("index.html")
 
