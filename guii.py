@@ -64,7 +64,7 @@ class TrafficFlowGUI(tk.Tk):
 
         self.model_var = tk.StringVar()
         self.model_dropdown = ttk.Combobox(self.input_frame, textvariable=self.model_var, font=("Helvetica", 10))
-        self.model_dropdown['values'] = ("LSTM", "GRU", "SAES")
+        self.model_dropdown['values'] = ("LSTM", "GRU", "SAES", "SAES_FIXED", "RNN")
         self.model_dropdown.grid(row=1, column=1, padx=10, pady=5, sticky='ew')
         self.model_dropdown.current(0)
 

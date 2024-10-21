@@ -47,7 +47,7 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",
-        default="saes",
+        default="rnn",
         help="Model to train.")
     args = parser.parse_args()
 
@@ -73,11 +73,20 @@ def main(argv):
         elif args.model == 'gru':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_gru([lag, 64, 64, 1])
+        elif args.model == 'rnn':
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            m = model.get_rnn([lag, 64, 64, 1])
         elif args.model == 'saes':
             # For SAES, combine flow data with time features
             X_train = np.concatenate((X_train, X_train_time), axis=1)
             models = model.get_saes([X_train.shape[1], 400, 400, 400, 1])
             m = models[-1]
+        elif args.model == 'saes_fixed':
+            X_train = np.concatenate((X_train, X_train_time), axis=1)
+            input_dim = X_train.shape[1] # adjust input dimension for SAEs
+            hidden_layers = [400, 400, 400]
+
+            m = model.get_saes_fixed(input_dim, hidden_layers)
 
         train_model(m, X_train, y_train, args.model, config, site)
 

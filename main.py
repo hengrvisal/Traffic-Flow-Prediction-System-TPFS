@@ -97,19 +97,30 @@ def main():
     lstm = load_model('model/sites_models/lstm_2000.h5')
     gru = load_model('model/sites_models/gru_2000.h5')
     saes = load_model('model/sites_models/saes_2000.h5')
-    models = [lstm, gru, saes]
-    names = ['LSTM', 'GRU', 'SAEs']
+    saes_fixed = load_model('model/sites_models/saes_fixed_2000.h5')
+    rnn = load_model('model/sites_models/rnn_2000.h5')
+
+    models = [lstm, gru, saes, saes_fixed, rnn]
+    names = ['LSTM', 'GRU', 'SAEs', 'SAEs_fixed', 'RNN']
 
     lag = 12
     file1 = 'data/splitted_data/2000_train.csv'
     file2 = 'data/splitted_data/2000_test.csv'
-    _, _, X_test, y_test, scaler = process_data(file1, file2, lag)
+    X_train, X_train_time, y_train, X_test, X_test_time, y_test, scaler = process_data(file1, file2, lag)
     y_test = scaler.inverse_transform(y_test.reshape(-1, 1)).reshape(1, -1)[0]
 
     y_preds = []
     for name, model in zip(names, models):
-        if name == 'SAEs':
-            X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1]))
+        if name == 'SAEs' or name == 'SAEs_fixed':
+            # Reshape X_test to 2D (flatten) to match X_test_time's 2D shape
+            X_test_reshaped = X_test.reshape((X_test.shape[0], X_test.shape[1]))
+
+            # Concatenate flow data with time features before prediction
+            X_test = np.concatenate((X_test_reshaped, X_test_time), axis=1)
+
+            # Ensure X_test_full has exactly 18 features
+            if X_test.shape[1] > 18:
+                X_test = X_test[:, :18]
         else:
             X_test = np.reshape(X_test, (X_test.shape[0], X_test.shape[1], 1))
         file = 'images/' + name + '.png'

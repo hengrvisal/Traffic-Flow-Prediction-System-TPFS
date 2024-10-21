@@ -104,7 +104,7 @@ def pathfinder(start: str, end: str, start_time: datetime, model_type: str) -> L
 if __name__ == "__main__":
     start = input("Enter starting SCATS site number: ")
     end = input("Enter ending SCATS site number: ")
-    model_type = input("Enter model type (LSTM, GRU, or SAES): ").upper()
+    model_type = input("Enter model type (LSTM, GRU, SAEs, SAEs_Fixed, or RNN): ").upper()
     date_time_str = input("Enter date and time (YYYY-MM-DD HH:MM), or press Enter for current date and time: ")
 
     start_time = datetime.now() if not date_time_str.strip() else datetime.strptime(date_time_str, "%Y-%m-%d %H:%M")

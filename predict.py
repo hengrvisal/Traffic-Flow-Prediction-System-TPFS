@@ -57,10 +57,10 @@ def prepare_input_data(date_time, input_shape, model_type):
         (date_time.month - 1) / 11.0
     ]
 
-    if model_type in ['LSTM', 'GRU']:
+    if model_type in ['LSTM', 'GRU', 'RNN']:
         data = [base_features[:input_shape[1]]] * input_shape[0]
         return np.array(data).reshape((1,) + input_shape)
-    elif model_type == 'SAES':
+    elif model_type in ['SAES', 'SAES_FIXED']:
         features = base_features + [0.5] * 12  # Placeholder for recent traffic data
         return np.array(features).reshape(1, 18)
 
@@ -97,7 +97,7 @@ def apply_time_adjustment(prediction, hour, is_weekday):
 def cached_predict(site, date_time, model_type):
     model = load_model_for_site(site, model_type)
     if model:
-        if model_type in ['LSTM', 'GRU']:
+        if model_type in ['LSTM', 'GRU', 'RNN']:
             input_shape = model.input_shape[1:]
         else:  # SAES
             input_shape = model.input_shape[1]
@@ -107,10 +107,10 @@ def cached_predict(site, date_time, model_type):
             prediction = model.predict(input_data)
 
             # Model-specific processing
-            if model_type in ['LSTM', 'GRU']:
+            if model_type in ['LSTM', 'GRU', 'RNN']:
                 # LSTM and GRU might output a sequence, take the last value
                 prediction = prediction[0][-1] if len(prediction[0]) > 1 else prediction[0][0]
-            else:  # SAES
+            else:  # SAES and SAES_FIXED
                 prediction = prediction[0][0]
 
             # Denormalize prediction
@@ -138,7 +138,7 @@ def traffic_flow_prediction():
     end = input("Enter ending SCATS site number: ")
 
     model_type = input("Enter model type (LSTM, GRU, or SAES): ").upper()
-    while model_type not in ['LSTM', 'GRU', 'SAES']:
+    while model_type not in ['LSTM', 'GRU', 'SAES', 'SAES_FIXED', 'RNN']:
         print("Invalid model type. Please enter LSTM, GRU, or SAES.")
         model_type = input("Enter model type (LSTM, GRU, or SAES): ").upper()
 
