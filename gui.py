@@ -16,6 +16,7 @@ import json
 neighbors = load_neighbors()
 TRAFFIC_NETWORK = 'neighbouring_intersections.csv'
 
+
 class TrafficFlowGUI(tk.Tk):
     def __init__(self):
         super().__init__()
