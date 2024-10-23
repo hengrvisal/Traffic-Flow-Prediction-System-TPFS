@@ -42,7 +42,8 @@ def load_model_for_site(site, model_type):
     key = f"{model_type.lower()}_{site}"
     if key not in model_cache:
         # model_path = f'model/sites_models/{key}.h5'
-        model_path = os.path.join('model', 'sites_models', f'{model_type.lower()}_{site}.h5')
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(base_dir, 'model', 'sites_models', f'{model_type}_{site}.h5')
         try:
             model = load_model(model_path)
             print(f"Loaded {model_type} model for site {site}")
