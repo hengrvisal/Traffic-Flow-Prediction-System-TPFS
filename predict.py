@@ -3,10 +3,12 @@ import pandas as pd
 from keras.models import load_model
 from datetime import datetime, timedelta
 from functools import lru_cache
+import os
 
 # Global variables
 model_cache = {}
 neighbors = None
+
 
 def load_neighbors():
     global neighbors
@@ -17,6 +19,7 @@ def load_neighbors():
             scats = str(row['Scats_number'])
             neighbors[scats] = row['Neighbours'].split(';')
     return neighbors
+
 
 def find_path(start, end, neighbors):
     queue = [(start, [start])]
@@ -33,11 +36,13 @@ def find_path(start, end, neighbors):
                     queue.append((neighbor, path + [neighbor]))
     return None
 
+
 def load_model_for_site(site, model_type):
     global model_cache
     key = f"{model_type.lower()}_{site}"
     if key not in model_cache:
-        model_path = f'model/sites_models/{key}.h5'
+        # model_path = f'model/sites_models/{key}.h5'
+        model_path = os.path.join('model', 'sites_models', f'{model_type.lower()}_{site}.h5')
         try:
             model = load_model(model_path)
             print(f"Loaded {model_type} model for site {site}")
@@ -46,6 +51,7 @@ def load_model_for_site(site, model_type):
             print(f"No {model_type} model found for site {site}")
             model_cache[key] = None
     return model_cache[key]
+
 
 def prepare_input_data(date_time, input_shape, model_type):
     base_features = [
@@ -64,8 +70,10 @@ def prepare_input_data(date_time, input_shape, model_type):
         features = base_features + [0.5] * 12  # Placeholder for recent traffic data
         return np.array(features).reshape(1, 18)
 
+
 def denormalize_prediction(prediction, min_value=0, max_value=500):
     return int(round(min_value + prediction * (max_value - min_value)))
+
 
 def interpret_traffic_flow(value):
     if value < 30:
@@ -78,6 +86,7 @@ def interpret_traffic_flow(value):
         return "High traffic"
     else:
         return "Very high traffic"
+
 
 def apply_time_adjustment(prediction, hour, is_weekday):
     time_factors = {
@@ -92,6 +101,7 @@ def apply_time_adjustment(prediction, hour, is_weekday):
         time_factors = {h: max(0.6, f * 0.8) for h, f in time_factors.items()}
 
     return prediction * time_factors.get(hour, 1.0)
+
 
 @lru_cache(maxsize=10000)
 def cached_predict(site, date_time, model_type):
@@ -128,8 +138,10 @@ def cached_predict(site, date_time, model_type):
             print(f"Error predicting for site {site}: {str(e)}")
     return None, None
 
+
 def predict_traffic_flow(path, date_time, model_type):
     return [cached_predict(site, date_time, model_type) + (site,) for site in path]
+
 
 def traffic_flow_prediction():
     neighbors = load_neighbors()
@@ -167,6 +179,7 @@ def traffic_flow_prediction():
                 print(f"SCATS site {site}: No {model_type} model available")
     else:
         print("No path found between the given SCATS sites.")
+
 
 if __name__ == "__main__":
     traffic_flow_prediction()
