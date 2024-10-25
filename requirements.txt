@@ -15,7 +15,7 @@ entrypoints==0.3
 folium==0.13.0
 geographiclib==1.52
 graphviz==0.8.2
-h5py==3.1.0
+h5py==2.7.1
 html5lib==0.9999999
 idna==3.10
 importlib-metadata==4.8.3
