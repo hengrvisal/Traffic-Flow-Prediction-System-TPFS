@@ -47,7 +47,7 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",
-        default="rnn",
+        default="saes",
         help="Model to train.")
     args = parser.parse_args()
 
@@ -60,8 +60,8 @@ def main(argv):
 
     # Loop through each SCATS site and train the model
     for site in scats_sites:
-        train_file = os.path.join(data_dir, f'{site}_train.csv')
-        test_file = os.path.join(data_dir, f'{site}_test.csv')
+        train_file = os.path.join(os.path.dirname(__file__), data_dir, f'{site}_train.csv')
+        test_file = os.path.join(os.path.dirname(__file__), data_dir, f'{site}_test.csv')
 
         # Process data for each SCATS site
         X_train, X_train_time, y_train, X_test, X_test_time, y_test, scaler = process_data(train_file, test_file, lag)
@@ -70,18 +70,18 @@ def main(argv):
         if args.model == 'lstm':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_lstm([lag, 64, 64, 1])
-        elif args.model == 'gru':
+        if args.model == 'gru':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_gru([lag, 64, 64, 1])
-        elif args.model == 'rnn':
+        if args.model == 'rnn':
             X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
             m = model.get_rnn([lag, 64, 64, 1])
-        elif args.model == 'saes':
+        if args.model == 'saes':
             # For SAES, combine flow data with time features
             X_train = np.concatenate((X_train, X_train_time), axis=1)
             models = model.get_saes([X_train.shape[1], 400, 400, 400, 1])
             m = models[-1]
-        elif args.model == 'saes_fixed':
+        if args.model == 'saes_fixed':
             X_train = np.concatenate((X_train, X_train_time), axis=1)
             input_dim = X_train.shape[1] # adjust input dimension for SAEs
             hidden_layers = [400, 400, 400]

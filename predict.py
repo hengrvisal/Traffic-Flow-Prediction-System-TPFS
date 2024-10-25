@@ -21,6 +21,7 @@ def load_neighbors():
     return neighbors
 
 
+# A* implementation
 def find_path(start, end, neighbors):
     queue = [(start, [start])]
     visited = set()
@@ -41,16 +42,19 @@ def load_model_for_site(site, model_type):
     global model_cache
     key = f"{model_type.lower()}_{site}"
     if key not in model_cache:
-        # model_path = f'model/sites_models/{key}.h5'
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        model_path = os.path.join(base_dir, 'model', 'sites_models', f'{model_type}_{site}.h5')
+        # model_pat     h = f'model/sites_models/{key}.h5'
+        # base_dir = os.path.dirname(os.path.abspath(__file__))
+        # model_path = os.path.join('model', 'sites_models', f'{key}.h5')
+        model_path = os.path.join(os.path.dirname(__file__), 'model', 'sites_models', f'{key}.h5')
         try:
-            model = load_model(model_path)
+            model = load_model(model_path, custom_objects={})
             print(f"Loaded {model_type} model for site {site}")
             model_cache[key] = model
         except:
+            print(model_path)
             print(f"No {model_type} model found for site {site}")
             model_cache[key] = None
+
     return model_cache[key]
 
 
