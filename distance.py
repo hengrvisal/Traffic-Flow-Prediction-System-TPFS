@@ -10,6 +10,8 @@ def load_intersection_data(file_path):
     for _, row in df.iterrows():
         scats = str(row['Scats_number'])
         intersection_data[scats] = (float(row['Latitude']), float(row['Longitude']))
+
+    print(intersection_data)
     return intersection_data
 
 
@@ -40,11 +42,10 @@ def distance_path(path):
     return distance
 
 
-# Testing on an example
-# neighbor = load_neighbors()
-# start = "970"
-# end = "2200"
-# path = find_path(start, end, neighbor)
-# print("Path:", path)
-#
-# print(distance_path(path))
+neighbor = load_neighbors()
+start = "970"
+end = ("2000")
+path = find_path(start, end, neighbor)
+print("Path:", path)
+
+print(distance_path(path))

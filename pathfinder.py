@@ -12,12 +12,14 @@ precomputed_distances = {}
 models = {}
 global_model_type = ""
 
+
 @lru_cache(maxsize=1000000)
 def get_distance(site1, site2):
     key = (min(site1, site2), max(site1, site2))
     if key not in precomputed_distances:
         precomputed_distances[key] = calculate_intersection_distance(site1, site2, intersection_data)
     return precomputed_distances[key]
+
 
 def load_all_models(model_type: str):
     global models, global_model_type
@@ -26,6 +28,7 @@ def load_all_models(model_type: str):
     for site in all_sites:
         if site not in models:
             models[site] = load_model_for_site(site, model_type)
+
 
 def calculate_speed(traffic_flow, is_peak_hour):
     # Constants
@@ -50,6 +53,7 @@ def calculate_speed(traffic_flow, is_peak_hour):
         over_capacity = traffic_flow - CAPACITY_FLOW
         speed_decrease = min(20, over_capacity / 10)  # Max 20 km/h decrease for very high traffic
         return max(MIN_SPEED, CAPACITY_SPEED - speed_decrease)
+
 
 def find_multiple_paths(start: str, end: str, start_time: datetime, num_paths: int = 5) -> List[Tuple[float, float, List[str], float]]:
     heap = [(0, 0, [start], start_time, 0)]  # (estimated_time, distance, path, current_time, total_flow)
@@ -95,11 +99,13 @@ def find_multiple_paths(start: str, end: str, start_time: datetime, num_paths: i
 
     return sorted(paths, key=lambda x: x[0])[:num_paths]  # Sort by estimated time and return top num_paths
 
+
 def pathfinder(start: str, end: str, start_time: datetime, model_type: str) -> List[Tuple[float, float, List[str], float]]:
     global global_model_type
     global_model_type = model_type
     load_all_models(model_type)
     return find_multiple_paths(start, end, start_time)
+
 
 if __name__ == "__main__":
     start = input("Enter starting SCATS site number: ")
